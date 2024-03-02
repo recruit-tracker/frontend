@@ -1,6 +1,6 @@
 export const students = [
   {
-    id: 1,
+    
     name: "Mitchell Kimbell",
     email: "mfkimbell@gmail.com",
     phone: "2053128982",
@@ -19,7 +19,7 @@ export const students = [
     },
   },
   {
-    id: 2,
+    
     name: "Alex Johnson",
     email: "alex.johnson@example.com",
     phone: "4085550123",
