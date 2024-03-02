@@ -10,7 +10,7 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import students from "../../testData/testStudents"; // Adjust the import path based on your file structure.
+import { students } from "../../testData/testStudents"; // Adjust the import path based on your file structure.
 
 const HrPortal = () => {
   const handleUpdate = (email) => {

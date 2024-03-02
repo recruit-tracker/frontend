@@ -1,5 +1,4 @@
-// TestData.js
-const students = [
+export const students = [
   {
     id: 1,
     name: "Mitchell Kimbell",
@@ -13,7 +12,11 @@ const students = [
     stage: "first-round",
     interest: 8,
     linkedIn: "https://www.linkedin.com/in/mitchell-kimbell-mscs-3384191a1/",
-    resume: "link-to-resume",
+    resume: "link-to-resume", // Assuming this is a URL to the resume
+    feedback: {
+      "Harris Bolus": "I liked them",
+      "Ben Kimbell": "They type fast",
+    },
   },
   {
     id: 2,
@@ -28,9 +31,12 @@ const students = [
     stage: "second-round",
     interest: 9,
     linkedIn: "https://www.linkedin.com/in/alex-johnson/",
-    resume: "link-to-resume",
+    resume: "link-to-resume", // Assuming this is also a URL
+    feedback: {
+      "Jayden Pyles": "This person was ok",
+      "Jay Chin": "This person was amazing",
+    },
   },
-  // Add more student entries as needed
+  // Additional student entries as needed
 ];
 
-export default students;
