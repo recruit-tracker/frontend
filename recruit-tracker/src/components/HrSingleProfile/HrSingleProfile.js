@@ -6,7 +6,6 @@ import {
   IconButton,
   TextField,
   Tooltip,
-  Link,
   Typography,
   Table,
   TableBody,
@@ -15,95 +14,111 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import ArticleIcon from "@mui/icons-material/Article";
+import AddIcon from "@mui/icons-material/Add";
 import { students } from "../../testData/testStudents"; // Adjust the import path as necessary
 
 const HrSingleProfile = () => {
-  const [profileInfo, setProfileInfo] = useState(students[0]);
-  const [editField, setEditField] = useState(null);
-  const [editableFeedback, setEditableFeedback] = useState(null);
-
-  const handleEditClick = (field) => {
-    setEditField(field);
-    setEditableFeedback(null); // Reset editable feedback to ensure only one edit mode is active
-  };
-
-  const handleFeedbackEditClick = (reviewer) => {
-    setEditableFeedback(reviewer);
-    setEditField(null); // Reset edit field to ensure only one edit mode is active
-  };
+  const [profileInfo, setProfileInfo] = useState({
+    ...students[0],
+    feedback: Array.isArray(students[0].feedback)
+      ? students[0].feedback
+      : Object.entries(students[0].feedback || {}).map(([reviewer, text]) => ({
+          reviewer,
+          text,
+        })),
+  });
 
   const handleFieldChange = (e, field) => {
-    if (editableFeedback) {
-      // Update feedback text
-      setProfileInfo({
-        ...profileInfo,
-        feedback: {
-          ...profileInfo.feedback,
-          [editableFeedback]: e.target.value,
-        },
-      });
-    } else {
-      // Update other profile fields
-      setProfileInfo({ ...profileInfo, [field]: e.target.value });
-    }
+    setProfileInfo({ ...profileInfo, [field]: e.target.value });
+  };
+
+  const handleFeedbackChange = (e, index, field) => {
+    const updatedFeedback = profileInfo.feedback.map((feedback, i) => {
+      if (i === index) {
+        return { ...feedback, [field]: e.target.value };
+      }
+      return feedback;
+    });
+    setProfileInfo({ ...profileInfo, feedback: updatedFeedback });
+  };
+
+  const handleAddFeedback = () => {
+    const newFeedback = { reviewer: "", text: "" };
+    setProfileInfo((prevState) => ({
+      ...prevState,
+      feedback: [...prevState.feedback, newFeedback],
+    }));
   };
 
   const handleSaveChanges = () => {
     console.log("Saving changes", profileInfo);
-    setEditField(null);
-    setEditableFeedback(null);
+    // Implement save functionality here
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <HrHeader />
       <div
         className="main-content"
-        style={{ padding: "24px", marginTop: "64px" }}
+        style={{
+          flexGrow: 1,
+          overflowY: "auto",
+          padding: "24px",
+          marginTop: "43px",
+        }}
       >
         <Typography variant="h4" gutterBottom>
           Profile Information
         </Typography>
         <Grid container spacing={2} style={{ marginBottom: "20px" }}>
-          {/* Render only specific fields in the top section */}
-          {Object.entries(profileInfo).map(
-            ([key, value]) =>
-              key !== "id" &&
-              key !== "feedback" && (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  key={key}
-                  style={{ position: "relative" }}
-                >
+          {Object.entries(profileInfo).map(([key, value]) =>
+            key !== "id" && key !== "feedback" ? (
+              <Grid item xs={12} sm={6} key={key}>
+                {key === "stage" || key === "position" ? (
+                  <Select
+                    fullWidth
+                    displayEmpty
+                    value={value}
+                    onChange={(e) => handleFieldChange(e, key)}
+                    variant="outlined"
+                  >
+                    {key === "stage" ? (
+                      <>
+                        <MenuItem value="Applying">Applying</MenuItem>
+                        <MenuItem value="Reviewed">Reviewed</MenuItem>
+                        <MenuItem value="Interviewed">Interviewed</MenuItem>
+                        <MenuItem value="Offered">Offered</MenuItem>
+                      </>
+                    ) : (
+                      <>
+                        <MenuItem value="Full Time">Full Time</MenuItem>
+                        <MenuItem value="Part Time">Part Time</MenuItem>
+                        <MenuItem value="Intern">Intern</MenuItem>
+                      </>
+                    )}
+                  </Select>
+                ) : (
                   <TextField
                     fullWidth
                     label={key.charAt(0).toUpperCase() + key.slice(1)}
-                    value={editField === key ? value : value || ""}
+                    value={value}
                     onChange={(e) => handleFieldChange(e, key)}
                     variant="outlined"
-                    InputProps={{
-                      readOnly: editField !== key,
-                      endAdornment: (
-                        <Tooltip title="Edit">
-                          <IconButton onClick={() => handleEditClick(key)}>
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      ),
-                    }}
                   />
-                </Grid>
-              )
+                )}
+              </Grid>
+            ) : null
           )}
         </Grid>
         <Typography variant="h5" gutterBottom>
           Feedback
+          <IconButton onClick={handleAddFeedback} aria-label="add feedback">
+            <AddIcon />
+          </IconButton>
         </Typography>
         <TableContainer component={Paper} style={{ marginBottom: "20px" }}>
           <Table>
@@ -111,38 +126,31 @@ const HrSingleProfile = () => {
               <TableRow>
                 <TableCell>Reviewer</TableCell>
                 <TableCell>Feedback</TableCell>
-                <TableCell align="right">Edit</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.entries(profileInfo.feedback || {}).map(
-                ([reviewer, feedback], index) => (
-                  <TableRow key={index}>
-                    <TableCell>{reviewer}</TableCell>
-                    <TableCell>
-                      {editableFeedback === reviewer ? (
-                        <TextField
-                          fullWidth
-                          variant="standard"
-                          value={feedback}
-                          onChange={(e) => handleFieldChange(e, reviewer)}
-                        />
-                      ) : (
-                        feedback
-                      )}
-                    </TableCell>
-                    <TableCell align="right">
-                      <Tooltip title="Edit">
-                        <IconButton
-                          onClick={() => handleFeedbackEditClick(reviewer)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
+              {profileInfo.feedback.map((feedback, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <TextField
+                      fullWidth
+                      variant="standard"
+                      value={feedback.reviewer}
+                      onChange={(e) =>
+                        handleFeedbackChange(e, index, "reviewer")
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <TextField
+                      fullWidth
+                      variant="standard"
+                      value={feedback.text}
+                      onChange={(e) => handleFeedbackChange(e, index, "text")}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
