@@ -36,6 +36,7 @@ const Signup = () => {
     };
 
     return (
+        <div class="JAYDEN">
         <div className="signup-container">
             <img src={logo} alt="Company logo" width="106.68" height="50" />
             <form className="signup-form" onSubmit={handleSubmit}>
@@ -104,6 +105,7 @@ const Signup = () => {
                     <button type="submit">Sign Up</button>
                 </div>
             </form>
+        </div>
         </div>
     );
 };

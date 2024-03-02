@@ -8,6 +8,12 @@ body, html {
     justify-content: center;
     align-items: center;
     /* background-color: #ff0000; */
+    
+}
+
+.MITCH {
+    width: 100vw;
+    height: 100vh;
     background-image: linear-gradient(to bottom right, #E31937, #5236AB);
 }
 

@@ -9,6 +9,15 @@
     height: 500px;
     gap: 20px; /* Creates space between form elements */
 }
+.JAYDEN {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh; /* Adjusted for consistency */
+    align-items: center;
+    background-image: linear-gradient(to bottom right, #E31937, #5236AB);
+}
 img {
     margin-left: auto;
     margin-right: auto;

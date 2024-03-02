@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Link} from "react-router-dom";
 
 const Login = () => {
   return (
+    <div class="MITCH">
     <div className="login-container">
       <form className="login-form">
         <img src={logo} alt="Company logo" width="106.68" height="50" />
@@ -27,6 +28,7 @@ const Login = () => {
           <p>Don't have an account? <a href="/signup">sign up</a></p>
         </div>
       </form>
+    </div>
     </div>
   );
 };
