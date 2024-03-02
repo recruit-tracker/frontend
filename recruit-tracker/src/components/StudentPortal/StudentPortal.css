@@ -38,6 +38,7 @@ body {
   }
   
   .info-value {
+	
 	flex-grow: 1;
 	margin-right: 10px; /* Ensure spacing before the edit icon */
   }

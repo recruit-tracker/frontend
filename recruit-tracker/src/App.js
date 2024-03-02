@@ -5,6 +5,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import StudentPortal from "./components/StudentPortal/StudentPortal";
 import HrPortal from "./components/HrPortal/HrPortal";
 import HrSingleProfile from "./components/HrSingleProfile/HrSingleProfile";
+import ForgetPw from './components/forgetpw/forgetpw';
 
 const AppRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Route path="/loginform" element={<LoginForm />} />
       <Route  path="/student" element={<StudentPortal></StudentPortal>}></Route>
       <Route path="/hr" element={<HrPortal></HrPortal>}></Route>
+      <Route path="/forgetpw" element={<ForgetPw />} />
       <Route
         path="/hr/student"
         element={<HrSingleProfile></HrSingleProfile>}

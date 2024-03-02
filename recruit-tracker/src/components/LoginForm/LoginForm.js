@@ -92,7 +92,7 @@ const Signup = () => {
                         />
                     </div>
                     <div className="form-control">
-                        <label>Preference</label>
+                        <label>Employment</label>
                         <select name="preference" value={formData.preference} onChange={handleChange} required>
                             <option value="">Select...</option>
                             <option value="internship">Internship</option>
@@ -117,6 +117,16 @@ const Signup = () => {
                             value={formData.college}
                             onChange={handleChange}
                             />
+                        </div>
+                        <div className="form-control">
+                        <label htmlFor="locationPreferences">Location Preferences</label>
+                        <input
+                            type="text"
+                            id="locationPreferences"
+                            name="locationPreferences"
+                            value={formData.locationPreferences}
+                            onChange={handleChange}
+                        />
                         </div>
                         <div className="form-control">
                             <label htmlFor="resume">Resume</label>

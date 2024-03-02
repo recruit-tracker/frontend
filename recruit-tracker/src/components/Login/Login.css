@@ -41,12 +41,13 @@ img {
     margin-right: auto;
 }
 
-.form-control label {
-    display: block;
+.login-form-control label {
+    display: inline-block;
     margin-bottom: 5px;
 }
 
-.form-control input {
+.login-form-control input {
+    display: inline-block;
     width: 95%;
     padding: 10px;
     border: 1px solid #ddd;

@@ -9,23 +9,23 @@ const Login = () => {
     <div className="login-container">
       <form className="login-form">
         <img src={logo} alt="Company logo" width="106.68" height="50" />
-        <div className="form-control">
+        <div className="login-form-control">
           <label htmlFor="username">Username</label>
           <input type="text" id="username" name="username" required />
         </div>
-        <div className="form-control">
+        <div className="login-form-control">
           <label htmlFor="password">Password</label>
           <input type="password" id="password" name="password" required />
         </div>
         <button type="submit">Log In</button>
-        <a href="/forgot-password" style={{ display: 'inline-block', marginTop: '8px', width: "130px" }}>Forgot password?</a>
+        <a href="/forgetpw" style={{ display: 'inline-block', marginTop: '8px', width: "130px" }}>Forgot password?</a>
         <div className="signup">
           <hr style={{ margin: '0 auto 5px' }} />
           <p> &nbsp; or &nbsp;</p>
           <hr style={{ margin: '0 auto 5px' }} />
           <br></br>
           <br></br>
-          <p>Don't have an account? <a href="/signup">sign up</a></p>
+          <p>Don't have an account? <a href="/LoginForm">Sign up</a></p>
         </div>
       </form>
     </div>
