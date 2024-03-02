@@ -7,7 +7,8 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f2f5;
+    /* background-color: #ff0000; */
+    background-image: linear-gradient(to bottom right, #E31937, #5236AB);
 }
 
 .login-container {
@@ -21,10 +22,17 @@ body, html {
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
+    width: 420px;
+    height: 440px;
     gap: 20px; /* Creates space between form elements */
+}
+
+img {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .form-control label {
@@ -33,7 +41,7 @@ body, html {
 }
 
 .form-control input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -46,4 +54,20 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.signup {
+
+    margin-top: 5px;
+}
+
+.signup hr{
+    display: inline-block;
+    width: 45%;
+    border: 1px solid #ccc;
+}
+.signup p{
+    display: inline-block;
+    /* border: 1px solid red; */
+    margin-top: -5px;
 }

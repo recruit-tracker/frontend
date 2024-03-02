@@ -1,4 +1,8 @@
 /* StudentPortal.css */
+body {
+	background-color: white;
+}
+
 .main-content {
 	padding: 20px;
   }

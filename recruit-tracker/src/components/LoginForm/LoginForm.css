@@ -1,0 +1,38 @@
+.signup-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    width: 470px;
+    height: 500px;
+    gap: 20px; /* Creates space between form elements */
+}
+img {
+    margin-left: auto;
+    margin-right: auto;
+}
+/* LoginForm.css or Signup.css */
+.form-control {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Adds space between form controls */
+}
+
+.form-control label {
+    flex: 1;
+    margin-right: 20px; /* Space between label and input/select */
+}
+
+.form-control input,
+.form-control select {
+    flex: 2; /* Allows input/select to take more space than label */
+    padding: 8px 10px; /* Adds some padding inside inputs and selects for better text visibility */
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns button to the right */
+    margin-top: 50px; /* Adds some space above the button */
+}
