@@ -5,8 +5,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
     width: 470px;
-    height: 500px;
+    height: 560px;
     gap: 20px; /* Creates space between form elements */
 }
 .JAYDEN {
@@ -15,7 +17,7 @@
     width: 100vw;
     height: 100vh;
     max-height: 100vh; /* Adjusted for consistency */
-    align-items: center;
+    align-items: center;    
     background-image: linear-gradient(to bottom right, #E31937, #5236AB);
 }
 img {

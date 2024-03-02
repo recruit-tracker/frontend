@@ -1,12 +1,15 @@
 /* StudentPortal.css */
 body {
 	background-color: white;
-	z-index: 9999;
 }
 
 .main-content {
 	padding: 20px;
   }
+
+.header {
+	background-image: linear-gradient(to bottom right, #E31937, #5236AB);
+}
   
   .student-info {
 	background-color: #fff;
@@ -48,7 +51,7 @@ body {
   
   /* Additional styles for Button from Material-UI for consistency */
   .MuiButton-containedPrimary {
-	background-color: #007bff; /* Use a consistent color for the primary button */
+    background-image: linear-gradient(to bottom right, #5236AB, #E31937);
 	color: white;
   }
   
