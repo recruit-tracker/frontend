@@ -1,0 +1,24 @@
+/* HrSingleProfile.css */
+.main-content {
+	padding: 20px;
+  }
+  
+  .profile-info {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+  }
+  
+  .info-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  }
+  
+  .info-label, .info-value {
+	margin-right: 10px;
+  }
+  
+  .save-changes-btn {
+	margin-top: 20px;
+  }

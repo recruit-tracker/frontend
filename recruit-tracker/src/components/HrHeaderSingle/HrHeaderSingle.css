@@ -1,0 +1,25 @@
+/* Header.css stays the same */
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #004d99;
+	color: white;
+	padding: 10px 20px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	box-sizing: border-box; /* Ensure padding doesn't affect total width */
+  }
+  
+  .logo {
+	font-weight: bold;
+	font-size: 20px;
+  }
+  
+  .logout {
+	cursor: pointer;
+	font-size: 16px;
+  }
+  
