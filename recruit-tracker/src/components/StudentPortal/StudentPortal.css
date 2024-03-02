@@ -1,0 +1,49 @@
+/* StudentPortal.css */
+.main-content {
+	padding: 20px;
+  }
+  
+  .student-info {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 20px 0;
+  }
+  
+  .info-row {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #eee; /* Use a lighter border for a subtle separation */
+	padding: 10px 0;
+  }
+  
+  .info-label {
+	font-weight: 600; /* Make labels slightly bolder */
+	color: #333; /* Darker text for better readability */
+	margin-right: 10px;
+  }
+  
+  .info-value {
+	flex-grow: 1;
+	margin-right: 10px; /* Ensure spacing before the edit icon */
+  }
+  
+  .MuiIconButton-root {
+	margin-left: auto; /* Ensure the edit button is always to the right */
+  }
+  
+  .save-changes-btn {
+	display: block; /* Make the button take the full width */
+	width: 100%;
+	margin-top: 20px; /* Space above the button */
+	padding: 10px 0; /* Taller button for easier clicking */
+	font-size: 16px; /* Larger font size for the button text */
+  }
+  
+  /* Additional styles for Button from Material-UI for consistency */
+  .MuiButton-containedPrimary {
+	background-color: #007bff; /* Use a consistent color for the primary button */
+	color: white;
+  }
+  
