@@ -16,7 +16,7 @@ const Signup = () => {
     gradDate: "",
     linkedIn: "",
     formData: { "": "" },
-    resume: null, // Added for resume file
+    resume: "placeholder", // Added for resume file
   });
 
   // Array of U.S. state abbreviations
@@ -120,7 +120,7 @@ const Signup = () => {
           navigate("/");
         } else {
           throw new Error(
-            "Failed to submit user form with status: " + response.status,
+            "Failed to submit user form with status: " + response.status
           );
         }
       })

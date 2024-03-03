@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HrHeaderSingle from "../HrHeaderSingle/HrHeaderSingle";
 import {
   Button,
@@ -30,16 +31,19 @@ import { API_URL } from "../../constants";
 const HrSingleProfile = () => {
   const location = useLocation();
   const { student: originalStudent } = location.state || {};
-  const { _id, ...studentWithoutId } = originalStudent || {};
+  const { _id, resume_hash, role, ...studentWithoutId } = originalStudent || {};
+  const navigate = useNavigate();
 
   const [profileInfo, setProfileInfo] = useState({
     ...studentWithoutId,
     feedback: Array.isArray(studentWithoutId.feedback)
       ? studentWithoutId.feedback
-      : Object.entries(studentWithoutId.feedback || {}).map(([reviewer, text]) => ({
-          reviewer,
-          text,
-        })),
+      : Object.entries(studentWithoutId.feedback || {}).map(
+          ([reviewer, text]) => ({
+            reviewer,
+            text,
+          })
+        ),
   });
 
   const handleFieldChange = (e, field) => {
@@ -76,15 +80,25 @@ const HrSingleProfile = () => {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => navigate("/hr"))
       .catch((error) => console.error("Error:", error));
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <HrHeaderSingle />
-      <div className="main-content" style={{ flexGrow: 1, overflowY: "auto", padding: "24px", marginTop: "43px" }}>
-        <Typography variant="h4" gutterBottom>Profile Information</Typography>
+      <div
+        className="main-content"
+        style={{
+          flexGrow: 1,
+          overflowY: "auto",
+          padding: "24px",
+          marginTop: "43px",
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Profile Information
+        </Typography>
         <Grid container spacing={2} style={{ marginBottom: "20px" }}>
           {Object.entries(profileInfo).map(([key, value]) => {
             if (key === "id" || key === "feedback") {
@@ -96,21 +110,32 @@ const HrSingleProfile = () => {
                 <FormControl fullWidth variant="outlined">
                   {key === "stage" || key === "position" ? (
                     <>
-                      <InputLabel>{key.charAt(0).toUpperCase() + key.slice(1)}</InputLabel>
+                      <InputLabel>
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </InputLabel>
                       <Select
                         value={value || ""}
                         onChange={(e) => handleFieldChange(e, key)}
                         label={key.charAt(0).toUpperCase() + key.slice(1)}
                       >
-                        {key === "stage" ? (
-                          ["Applying", "Reviewed", "Interviewed", "Offered"].map(option => (
-                            <MenuItem key={option} value={option}>{option}</MenuItem>
-                          ))
-                        ) : (
-                          ["Full Time", "Part Time", "Intern"].map(option => (
-                            <MenuItem key={option} value={option}>{option}</MenuItem>
-                          ))
-                        )}
+                        {key === "stage"
+                          ? [
+                              "Applying",
+                              "Reviewed",
+                              "Interviewed",
+                              "Offered",
+                            ].map((option) => (
+                              <MenuItem key={option} value={option}>
+                                {option}
+                              </MenuItem>
+                            ))
+                          : ["Full Time", "Part Time", "Intern"].map(
+                              (option) => (
+                                <MenuItem key={option} value={option}>
+                                  {option}
+                                </MenuItem>
+                              )
+                            )}
                       </Select>
                     </>
                   ) : (
@@ -121,28 +146,34 @@ const HrSingleProfile = () => {
                       onChange={(e) => handleFieldChange(e, key)}
                       variant="outlined"
                       InputProps={{
-                        startAdornment: key === "linkedin" ? (
-                          <InputAdornment position="start">
-                            <IconButton onClick={() => window.open(value, "_blank")}>
-                              <LinkedInIcon />
-                            </IconButton>
-                          </InputAdornment>
-                        ) : key === "resume" ? (
-                          <InputAdornment position="start">
-                            <IconButton onClick={() => window.open(value, "_blank")}>
-                              <DescriptionIcon />
-                            </IconButton>
-                          </InputAdornment>
-                        ) : null,
-                        endAdornment: key !== "email" && key !== "name" ? (
-                          <InputAdornment position="end">
-                            <Tooltip title="Edit">
-                              <IconButton>
-                                <EditIcon />
+                        startAdornment:
+                          key === "linkedin" ? (
+                            <InputAdornment position="start">
+                              <IconButton
+                                onClick={() => window.open(value, "_blank")}
+                              >
+                                <LinkedInIcon />
                               </IconButton>
-                            </Tooltip>
-                          </InputAdornment>
-                        ) : null,
+                            </InputAdornment>
+                          ) : key === "resume" ? (
+                            <InputAdornment position="start">
+                              <IconButton
+                                onClick={() => window.open(value, "_blank")}
+                              >
+                                <DescriptionIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          ) : null,
+                        endAdornment:
+                          key !== "email" && key !== "name" ? (
+                            <InputAdornment position="end">
+                              <Tooltip title="Edit">
+                                <IconButton>
+                                  <EditIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </InputAdornment>
+                          ) : null,
                       }}
                     />
                   )}
@@ -161,16 +192,19 @@ const HrSingleProfile = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Reviewer</TableCell>
+                <TableCell style={{ width: "20%" }}>Reviewer</TableCell>{" "}
+                {/* Adjusted width */}
                 <TableCell>Feedback</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {profileInfo.feedback.map((feedback, index) => (
                 <TableRow key={index}>
-                  <TableCell>
+                  <TableCell style={{ width: "20%" }}>
+                    {" "}
+                    {/* Adjusted width */}
                     <TextField
-                      fullWidth
+                      fullWidth // This ensures the TextField takes up the full width of the TableCell
                       variant="standard"
                       value={feedback.reviewer}
                       onChange={(e) =>
@@ -191,6 +225,7 @@ const HrSingleProfile = () => {
             </TableBody>
           </Table>
         </TableContainer>
+
         <Button variant="contained" color="primary" onClick={handleSaveChanges}>
           Save Changes
         </Button>

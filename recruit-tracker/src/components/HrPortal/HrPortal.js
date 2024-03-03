@@ -1,6 +1,4 @@
-import { API_URL } from "../../constants";
 import React, { useState, useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
 import HrHeader from "../HrHeader/HrHeader";
 import {
@@ -20,12 +18,15 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 import DescriptionIcon from "@mui/icons-material/Description"; // Using Description as Resume icon
 // import { students as initialStudents } from "../../testData/testStudents";
 import "./HrPortal.css"; // Adjust the path as necessary
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'; // Icon for upload
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"; // Icon for upload
 
 // Replace with your API URL
+
+import { API_URL } from "../../constants";
 
 const searchOptions = [
   { value: "name", label: "Name" },
@@ -38,6 +39,7 @@ const searchOptions = [
 
 const HrPortal = () => {
   const [students, setStudents] = useState([]);
+  const [allStudents, setAllStudents] = useState([]); // To keep a copy of all students
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCategory, setSearchCategory] = useState(searchOptions[0].value);
   const navigate = useNavigate();
@@ -46,8 +48,12 @@ const HrPortal = () => {
     fetchStudents();
   }, []);
 
+  useEffect(() => {
+    console.log("Students state changed:", students);
+  }, [students]); // Log every time 'students' changes
+
   const fetchStudents = () => {
-    fetch(API_URL + "/student/query", {
+    fetch(`${API_URL}/student/query`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,20 +63,10 @@ const HrPortal = () => {
         filter: null,
       }),
     })
-      .then((response) => {
-        console.log("response", response);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch students: ${response.statusText}`);
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        setStudents(data.users); // Assuming setStudents is defined elsewhere
-        // Printing out student details
-        console.log("Students:");
-        data.users.forEach((student) => {
-          console.log("Student:", student);
-        });
+        setStudents(data.users);
+        setAllStudents(data.users); // Keep a copy of all students for filtering
       })
       .catch((error) => {
         console.error("Error fetching students:", error);
@@ -82,11 +78,12 @@ const HrPortal = () => {
   };
 
   const handleSubmit = () => {
-    const filteredStudents = students.filter((student) =>
+    // Filter on the copy of all students to preserve original data
+    const filteredStudents = allStudents.filter((student) =>
       student[searchCategory]
         ?.toString()
         .toLowerCase()
-        .includes(searchQuery.toLowerCase()),
+        .includes(searchQuery.toLowerCase())
     );
     setStudents(filteredStudents);
   };
@@ -128,20 +125,20 @@ const HrPortal = () => {
         <div className="search-controls">
           <h2>Candidates</h2>
           <div className="buttonWrapper">
-          <Button
-            className="uploadCSV"
-            variant="contained"
-            component="label"
-            startIcon={<CloudUploadIcon />}
-          >
-            Import CSV
-            <input
-              type="file"
-              hidden
-              accept=".csv"
-              // onChange={handleFileUpload}  just implement logic
-          />
-          </Button>
+            <Button
+              className="uploadCSV"
+              variant="contained"
+              component="label"
+              startIcon={<CloudUploadIcon />}
+            >
+              Import CSV
+              <input
+                type="file"
+                hidden
+                accept=".csv"
+                // onChange={handleFileUpload}  just implement logic
+              />
+            </Button>
           </div>
           <div className="search-header">
             <TextField
@@ -223,11 +220,9 @@ const HrPortal = () => {
                   <TableCell>{student.college}</TableCell>
                   <TableCell>{student.gradDate}</TableCell>
                   <TableCell>{student.position}</TableCell>
-                  <TableCell>
-                    {student.locationPreferences}
-                  </TableCell>
+                  <TableCell>{student.locationPreferences}</TableCell>
                   <TableCell>{student.stage}</TableCell>
-                  <TableCell>{student.interest}</TableCell>
+                  <TableCell>{student.preference}</TableCell>
                   <TableCell>
                     <IconButton
                       aria-label="LinkedIn"
@@ -257,11 +252,8 @@ const HrPortal = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <footer className="footerBottom">
-        Recruiter © 2024
-      </footer>
+        <footer className="footerBottom">Recruiter © 2024</footer>
       </div>
-
     </div>
   );
 };

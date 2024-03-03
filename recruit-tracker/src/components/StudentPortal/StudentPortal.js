@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Header/Header"; // Adjust this import path as necessary.
-import "./StudentPortal.css"; // Ensure this CSS file exists and is correctly referenced.
+import Header from "../Header/Header";
+import "./StudentPortal.css";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import Button from "@mui/material/Button"; // Import Button component from Material-UI
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { API_URL } from "../../constants";
 
 const StudentPortal = () => {
@@ -11,33 +17,53 @@ const StudentPortal = () => {
     name: "",
     email: "",
     state: "",
-    school: "",
-    locationPreference: "", // Added new field for location preference
-    resume: "", // Added new field for resume (considering it as a status message)
+    college: "",
+    locationPreferences: "",
+    resume: "",
   });
 
-  const handleEdit = (field) => {
-    console.log(`Edit ${field}`);
-    // Add your logic to handle the edit action here.
-    // For the "Resume" field, this might involve opening a file upload dialog.
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false);
+
+  const handleChange = (e, field) => {
+    const { value } = e.target;
+    setStudentInfo((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
   };
 
-  const handleSaveChanges = () => {
-    console.log("Save changes");
-    // Implement save functionality here.
-    // Make sure to include logic for handling file uploads if necessary.
+  const handleSaveChanges = async () => {
+    console.log("Saving changes", studentInfo);
+    // Here you would typically send the updated studentInfo to your backend
+    // This example shows a generic fetch request; adjust it as needed for your API
+    try {
+      const response = await fetch(`${API_URL}/student/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: studentInfo,
+        }),
+      });
+      if (response.ok) {
+        console.log("Changes saved successfully");
+        setIsSaveDialogOpen(true);
+      } else {
+        console.log("Failed to save changes");
+      }
+    } catch (error) {
+      console.error("Error saving changes:", error);
+    }
   };
 
-  // Function to handle file uploads, consider this as a placeholder
-  // and update it according to your actual file upload logic
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       console.log("Uploading:", file.name);
-      // Update the resume field in studentInfo state with the file name or upload status
       setStudentInfo((prevState) => ({
         ...prevState,
-        resume: file.name, // Assuming you want to display the file name as the status
+        resume: file.name,
       }));
     }
   };
@@ -62,9 +88,9 @@ const StudentPortal = () => {
       name: user["name"],
       email: user["email"],
       state: user["state"],
-      school: user["college"],
-      position: user["position"], // Added new field for location preference
-      resume: "Not Uploaded", // Added new field for resume (considering it as a status message)
+      college: user["college"],
+      locationPreferences: user["locationPreferences"], // Assuming you meant the location preference here
+      resume: "Not Uploaded", // Placeholder text
     };
     setStudentInfo(userData);
   };
@@ -92,22 +118,21 @@ const StudentPortal = () => {
                       type="file"
                       hidden
                       onChange={handleFileUpload}
-                      accept="application/pdf" // Accept only PDF files
+                      accept="application/pdf"
                     />
                   </Button>
                 ) : (
-                  value
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    value={value}
+                    onChange={(e) => handleChange(e, key)}
+                  />
                 )}
               </span>
-              {key !== "resume" && ( // Exclude the edit button for the resume field
-                <IconButton
-                  onClick={() => handleEdit(key)}
-                  aria-label="edit"
-                  size="large"
-                >
-                  <EditIcon />
-                </IconButton>
-              )}
+              <IconButton aria-label="edit" size="large" disabled>
+                <EditIcon />
+              </IconButton>
             </div>
           ))}
         </div>
@@ -119,6 +144,24 @@ const StudentPortal = () => {
         >
           Save Changes
         </Button>
+        <Dialog
+          open={isSaveDialogOpen}
+          onClose={() => setIsSaveDialogOpen(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Changes Saved"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Your changes have been saved successfully.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setIsSaveDialogOpen(false)} autoFocus>
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
       <footer className="studentFooter">
         Recruiter © 2024
