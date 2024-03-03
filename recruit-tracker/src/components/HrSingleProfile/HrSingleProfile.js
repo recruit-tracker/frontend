@@ -229,9 +229,6 @@ const HrSingleProfile = () => {
         <Button variant="contained" color="primary" onClick={handleSaveChanges}>
           Save Changes
         </Button>
-        <footer className="footerBottom">
-        Recruiter © 2024
-      </footer>
       </div>
     </div>
   );
