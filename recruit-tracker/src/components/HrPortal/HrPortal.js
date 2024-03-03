@@ -74,6 +74,60 @@ const HrPortal = () => {
       });
   };
 
+  function csvToJson(csv) {
+    const lines = csv.split("\n");
+    const result = [];
+    const headers = lines[0].split(",");
+
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i]) continue;
+      const obj = {};
+      const currentline = lines[i].split(",");
+
+      for (let j = 0; j < headers.length; j++) {
+        obj[headers[j]] = currentline[j];
+      }
+
+      result.push(obj);
+    }
+
+    return result; // This will return a JSON array of objects
+  }
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = async (e) => {
+        const text = e.target.result;
+        const json = csvToJson(text);
+
+        try {
+          const response = await fetch(`${API_URL}/hr/import`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ path: json }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("Import successful", data);
+        } catch (error) {
+          console.error("Error during import:", error);
+        }
+      };
+
+      reader.readAsText(file);
+    }
+  };
+
   const handleResume = (email) => {
     fetch(`${API_URL}/student/resume`, {
       method: "POST",
@@ -94,7 +148,7 @@ const HrPortal = () => {
       student[searchCategory]
         ?.toString()
         .toLowerCase()
-        .includes(searchQuery.toLowerCase()),
+        .includes(searchQuery.toLowerCase())
     );
     setStudents(filteredStudents);
   };
@@ -147,7 +201,7 @@ const HrPortal = () => {
                 type="file"
                 hidden
                 accept=".csv"
-                // onChange={handleFileUpload}  just implement logic
+                onChange={handleFileUpload} // Attach the event handler here
               />
             </Button>
           </div>
