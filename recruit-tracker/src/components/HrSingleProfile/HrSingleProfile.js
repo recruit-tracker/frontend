@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import HrHeaderSingle from "../HrHeaderSingle/HrHeaderSingle";
+import AutoAwesome from "@mui/icons-material/AutoAwesome";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {
   Button,
   Grid,
@@ -31,7 +34,8 @@ import { API_URL } from "../../constants";
 const HrSingleProfile = () => {
   const location = useLocation();
   const { student: originalStudent } = location.state || {};
-  const { _id, resume_hash, role, ...studentWithoutId } = originalStudent || {};
+  const { _id, resume_hash, role, aiFeedback, ...studentWithoutId } =
+    originalStudent || {};
   const navigate = useNavigate();
 
   const [profileInfo, setProfileInfo] = useState({
@@ -50,6 +54,31 @@ const HrSingleProfile = () => {
     setProfileInfo({ ...profileInfo, [field]: e.target.value });
   };
 
+  const handleDeleteUser = () => {
+    console.log("Deleting user with email:", profileInfo.email);
+
+    fetch(`${API_URL}/student/delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: { email: profileInfo.email },
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data", data);
+
+        // Keep a copy of all students for filtering
+      })
+      .then((data) => navigate("/hr"))
+      .catch((error) => {
+        console.error("Error fetching students:", error);
+
+      });
+  };
+
   const handleFeedbackChange = (e, index, field) => {
     const updatedFeedback = profileInfo.feedback.map((feedback, i) => {
       if (i === index) {
@@ -66,6 +95,42 @@ const HrSingleProfile = () => {
       ...prevState,
       feedback: [...prevState.feedback, newFeedback],
     }));
+  };
+
+  const handleAddAIFeedback = () => {
+    const aiFeedback = {
+      reviewer: "AI",
+      text: "This is AI-generated feedback.",
+    }; // Example AI-generated feedback
+
+    // Log the user's email to the console
+    console.log("User's email:", profileInfo.email);
+
+    fetch(`${API_URL}/hr/suggestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: profileInfo.email,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data", data.text.content);
+        const aiFeedback2 = {
+          reviewer: "AI",
+          text: data.text.content,
+        };
+        setProfileInfo((prevState) => ({
+          ...prevState,
+          feedback: [...prevState.feedback, aiFeedback2],
+        }));
+        // Keep a copy of all students for filtering
+      })
+      .catch((error) => {
+        console.error("Error fetching students:", error);
+      });
   };
 
   const handleSaveChanges = () => {
@@ -98,7 +163,15 @@ const HrSingleProfile = () => {
       >
         <Typography variant="h4" gutterBottom>
           Profile Information
+          <IconButton
+            onClick={handleDeleteUser}
+            aria-label="delete user"
+            style={{ marginLeft: "10px" }}
+          >
+            <DeleteIcon />
+          </IconButton>
         </Typography>
+
         <Grid container spacing={2} style={{ marginBottom: "20px" }}>
           {Object.entries(profileInfo).map(([key, value]) => {
             if (key === "id" || key === "feedback") {
@@ -182,10 +255,17 @@ const HrSingleProfile = () => {
             );
           })}
         </Grid>
+
         <Typography variant="h5" gutterBottom>
           Feedback
           <IconButton onClick={handleAddFeedback} aria-label="add feedback">
             <AddIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleAddAIFeedback}
+            aria-label="add AI feedback"
+          >
+            <AutoAwesome /> {/* Using AutoAwesome icon for AI feedback */}
           </IconButton>
         </Typography>
         <TableContainer component={Paper} style={{ marginBottom: "20px" }}>
@@ -200,24 +280,28 @@ const HrSingleProfile = () => {
             <TableBody>
               {profileInfo.feedback.map((feedback, index) => (
                 <TableRow key={index}>
-                  <TableCell style={{ width: "20%" }}>
+                  <TableCell style={{ width: "20%", verticalAlign: "top" }}>
                     {" "}
-                    {/* Adjusted width */}
+                    {/* Align the TableCell content to the top */}
                     <TextField
-                      fullWidth // This ensures the TextField takes up the full width of the TableCell
-                      variant="standard"
+                      fullWidth
+                      variant="outlined"
                       value={feedback.reviewer}
                       onChange={(e) =>
                         handleFeedbackChange(e, index, "reviewer")
                       }
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{ style: { alignItems: "flex-start" } }} // Align the text field input to the top, might not be necessary but included for completeness
                     />
                   </TableCell>
                   <TableCell>
                     <TextField
                       fullWidth
-                      variant="standard"
+                      variant="outlined"
+                      multiline
                       value={feedback.text}
                       onChange={(e) => handleFeedbackChange(e, index, "text")}
+                      InputLabelProps={{ shrink: true }}
                     />
                   </TableCell>
                 </TableRow>

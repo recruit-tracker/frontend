@@ -17,6 +17,7 @@ const Signup = () => {
     linkedIn: "",
     formData: { "": "" },
     resume: "placeholder", // Added for resume file
+    aiFeedback: { text: "" },
   });
 
   // Array of U.S. state abbreviations
@@ -100,6 +101,7 @@ const Signup = () => {
       feedback: { "": "" },
       linkedIn: formData.linkedIn,
       interest: "",
+      aiFeedback: { text: "" },
     };
 
     fetch(`${API_URL}/student`, {
@@ -270,9 +272,7 @@ const Signup = () => {
             <div className="button-container">
               <button type="submit">Sign Up</button>
             </div>
-            <footer className="studentFooter">
-            Recruiter © 2024
-          </footer>
+            <footer className="studentFooter">Recruiter © 2024</footer>
           </form>
         </div>
       </div>
