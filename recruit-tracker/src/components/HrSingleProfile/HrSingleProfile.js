@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useLocation } from "react-router-dom";
 import HrHeaderSingle from "../HrHeaderSingle/HrHeaderSingle";
 import {
   Button,
@@ -28,11 +28,15 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { students } from "../../testData/testStudents"; // Adjust the import path as necessary
 
 const HrSingleProfile = () => {
+  const location = useLocation();
+  const { student } = location.state || {};
+  console.log("student", student);
+  console.log("previous", students[0]);
   const [profileInfo, setProfileInfo] = useState({
-    ...students[0],
-    feedback: Array.isArray(students[0].feedback)
-      ? students[0].feedback
-      : Object.entries(students[0].feedback || {}).map(([reviewer, text]) => ({
+    ...student,
+    feedback: Array.isArray(student.feedback)
+      ? student.feedback
+      : Object.entries(student.feedback || {}).map(([reviewer, text]) => ({
           reviewer,
           text,
         })),
@@ -62,7 +66,7 @@ const HrSingleProfile = () => {
 
   const handleSaveChanges = () => {
     console.log("Saving changes", profileInfo);
-    
+
     // Implement save functionality here
   };
 

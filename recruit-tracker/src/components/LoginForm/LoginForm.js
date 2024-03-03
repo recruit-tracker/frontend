@@ -11,7 +11,9 @@ const Signup = () => {
     preference: "", // Internship or Full-time
     state: "", // Using state abbreviation
     college: "",
-    graduationDate: "",
+    gradDate: "",
+    linkedIn: "",
+    formData: { "": "" },
     resume: null, // Added for resume file
   });
 
@@ -89,6 +91,12 @@ const Signup = () => {
       state: formData.state,
       college: formData.college,
       locationPreferences: formData.locationPreferences,
+      gradDate: formData.gradDate,
+      position: formData.preference,
+      stage: "Applied",
+      resume: null,
+      feedback: { "": "" },
+      linkedIn: formData.linkedIn,
     };
 
     fetch(`${API_URL}/student`, {
@@ -230,6 +238,17 @@ const Signup = () => {
                 name="locationPreferences"
                 value={formData.locationPreferences}
                 placeholder="Birmingham, Atlanta, Colorado..."
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control">
+              <label htmlFor="locationPreferences">LinkedIn</label>
+              <input
+                type="text"
+                id="linkedIn"
+                name="linkedIn"
+                value={formData.linkedIn}
+                placeholder="LinkedIn"
                 onChange={handleChange}
               />
             </div>

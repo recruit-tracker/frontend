@@ -1,5 +1,7 @@
 import { API_URL } from "../../constants";
 import React, { useState, useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
 import HrHeader from "../HrHeader/HrHeader";
 import {
   Table,
@@ -37,6 +39,7 @@ const HrPortal = () => {
   const [students, setStudents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCategory, setSearchCategory] = useState(searchOptions[0].value);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchStudents();
@@ -89,6 +92,32 @@ const HrPortal = () => {
 
   const handleView = (email) => {
     console.log("View button clicked for:", email);
+    fetch(API_URL + "/student/query", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: "",
+        filter: { email: email },
+      }),
+    })
+      .then((response) => {
+        console.log("response", response);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch students: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("data", data.users[0]);
+        navigate("/hr/student", { state: { student: data.users[0] } });
+
+        //I want to route here
+      })
+      .catch((error) => {
+        console.error("Error fetching students:", error);
+      });
   };
 
   return (
@@ -179,9 +208,7 @@ const HrPortal = () => {
                   <TableCell>{student.gradDate}</TableCell>
                   <TableCell>{student.position}</TableCell>
                   <TableCell>
-                    {student.locationPreferences
-                      ? student.locationPreferences.join(", ")
-                      : "No preferences"}
+                    {student.locationPreferences}
                   </TableCell>
                   <TableCell>{student.stage}</TableCell>
                   <TableCell>{student.interest}</TableCell>
