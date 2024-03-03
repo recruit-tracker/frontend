@@ -1,5 +1,5 @@
-// HrPortal.js
-import React, { useState } from "react";
+import { API_URL } from "../../constants";
+import React, { useState, useEffect } from "react";
 import HrHeader from "../HrHeader/HrHeader";
 import {
   Table,
@@ -22,6 +22,8 @@ import DescriptionIcon from "@mui/icons-material/Description"; // Using Descript
 import { students as initialStudents } from "../../testData/testStudents";
 import "./HrPortal.css"; // Adjust the path as necessary
 
+// Replace with your API URL
+
 const searchOptions = [
   { value: "name", label: "Name" },
   { value: "state", label: "State" },
@@ -35,6 +37,36 @@ const HrPortal = () => {
   const [students, setStudents] = useState(initialStudents);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCategory, setSearchCategory] = useState(searchOptions[0].value);
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const fetchStudents = () => {
+    fetch(API_URL + "/student/query", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: null,
+        filter: null,
+      }),
+    })
+      .then((response) => {
+        console.log("response", response);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch students: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setStudents(data.users);
+      })
+      .catch((error) => {
+        console.error("Error fetching students:", error);
+      });
+  };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -50,58 +82,64 @@ const HrPortal = () => {
     setStudents(filteredStudents);
   };
 
+  const handleView = (email) => {
+    console.log("View button clicked for:", email);
+  };
+
   return (
     <div className="portal-container">
       <HrHeader />
       <div className="main-content">
         <div className="search-controls">
           <h2>Candidates</h2>
-          <TextField
-            style={{ marginRight: "1%" }}
-            size="small"
-            label="Search"
-            variant="outlined"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="search-input"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            style={{ marginRight: "1%" }}
-            select
-            size="small"
-            variant="outlined"
-            value={searchCategory}
-            onChange={(e) => setSearchCategory(e.target.value)}
-            className="search-select"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FilterListIcon />
-                </InputAdornment>
-              ),
-            }}
-          >
-            {searchOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            style={{ height: "fit-content" }} // Adjust the style as needed
-          >
-            Search
-          </Button>
+          <div className="search-header">
+            <TextField
+              style={{ marginRight: "1%" }}
+              size="small"
+              label="Search"
+              variant="outlined"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="search-input"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              style={{ marginRight: "1%" }}
+              select
+              size="small"
+              variant="outlined"
+              value={searchCategory}
+              onChange={(e) => setSearchCategory(e.target.value)}
+              className="search-select"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FilterListIcon />
+                  </InputAdornment>
+                ),
+              }}
+            >
+              {searchOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ height: "fit-content" }}
+            >
+              Search
+            </Button>
+          </div>
         </div>
         <TableContainer component={Paper} className="table-container">
           <Table aria-label="candidate table">
@@ -120,6 +158,7 @@ const HrPortal = () => {
                   "Interest",
                   "LinkedIn",
                   "Resume",
+                  "View",
                 ].map((header) => (
                   <TableCell key={header}>{header}</TableCell>
                 ))}
@@ -153,6 +192,14 @@ const HrPortal = () => {
                     >
                       <DescriptionIcon />
                     </IconButton>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleView(student.email)}
+                    >
+                      View
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

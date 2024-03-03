@@ -61,8 +61,8 @@ const HrSingleProfile = () => {
   };
 
   const handleSaveChanges = () => {
-	  console.log("Saving changes", profileInfo);
-	  
+    console.log("Saving changes", profileInfo);
+    
     // Implement save functionality here
   };
 
