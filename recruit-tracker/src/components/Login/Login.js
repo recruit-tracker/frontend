@@ -25,6 +25,7 @@ const Login = () => {
       if (response.ok) {
         // If login successful, navigate to student page or perform other actions
         console.log("Login successful!");
+        console.log("repsponse: ", response);
         // Redirect or perform other actions here
       } else {
         // Handle login failure

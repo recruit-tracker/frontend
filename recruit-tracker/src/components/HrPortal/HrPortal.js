@@ -19,7 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import DescriptionIcon from "@mui/icons-material/Description"; // Using Description as Resume icon
-import { students as initialStudents } from "../../testData/testStudents";
+// import { students as initialStudents } from "../../testData/testStudents";
 import "./HrPortal.css"; // Adjust the path as necessary
 
 // Replace with your API URL
@@ -34,7 +34,7 @@ const searchOptions = [
 ];
 
 const HrPortal = () => {
-  const [students, setStudents] = useState(initialStudents);
+  const [students, setStudents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCategory, setSearchCategory] = useState(searchOptions[0].value);
 
@@ -61,7 +61,12 @@ const HrPortal = () => {
         return response.json();
       })
       .then((data) => {
-        setStudents(data.users);
+        setStudents(data.users); // Assuming setStudents is defined elsewhere
+        // Printing out student details
+        console.log("Students:");
+        data.users.forEach((student) => {
+          console.log("Student:", student);
+        });
       })
       .catch((error) => {
         console.error("Error fetching students:", error);
@@ -73,7 +78,7 @@ const HrPortal = () => {
   };
 
   const handleSubmit = () => {
-    const filteredStudents = initialStudents.filter((student) =>
+    const filteredStudents = students.filter((student) =>
       student[searchCategory]
         ?.toString()
         .toLowerCase()
@@ -148,12 +153,12 @@ const HrPortal = () => {
                 {[
                   "Name",
                   "Email",
-                  "Phone",
+
                   "State",
                   "School",
                   "Graduation",
                   "Position",
-                  "Office Location",
+                  "Location Preferences",
                   "Stage",
                   "Interest",
                   "LinkedIn",
@@ -169,12 +174,15 @@ const HrPortal = () => {
                 <TableRow key={student.email}>
                   <TableCell>{student.name}</TableCell>
                   <TableCell>{student.email}</TableCell>
-                  <TableCell>{student.phone}</TableCell>
                   <TableCell>{student.state}</TableCell>
-                  <TableCell>{student.school}</TableCell>
-                  <TableCell>{student.graduation}</TableCell>
+                  <TableCell>{student.college}</TableCell>
+                  <TableCell>{student.gradDate}</TableCell>
                   <TableCell>{student.position}</TableCell>
-                  <TableCell>{student.officeLocation}</TableCell>
+                  <TableCell>
+                    {student.locationPreferences
+                      ? student.locationPreferences.join(", ")
+                      : "No preferences"}
+                  </TableCell>
                   <TableCell>{student.stage}</TableCell>
                   <TableCell>{student.interest}</TableCell>
                   <TableCell>

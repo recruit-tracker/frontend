@@ -11,6 +11,7 @@ const Signup = () => {
     preference: "", // Internship or Full-time
     state: "", // Using state abbreviation
     college: "",
+    graduationDate: "",
     resume: null, // Added for resume file
   });
 
@@ -106,10 +107,11 @@ const Signup = () => {
           });
         } else {
           throw new Error(
-            "Failed to submit user form with status: " + response.status,
+            "Failed to submit user form with status: " + response.status
           );
         }
       })
+
       .then((uploadResponse) => {
         if (uploadResponse) {
           return uploadResponse.json();
@@ -138,6 +140,7 @@ const Signup = () => {
                 type="text"
                 id="name"
                 name="name"
+                placeholder="Name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -149,6 +152,7 @@ const Signup = () => {
                 type="email"
                 id="email"
                 name="email"
+                placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -160,6 +164,7 @@ const Signup = () => {
                 type="password"
                 id="password"
                 name="password"
+                placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -202,6 +207,18 @@ const Signup = () => {
                 id="college"
                 name="college"
                 value={formData.college}
+                placeholder="College"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control">
+              <label htmlFor="gradDate">Graduation Date </label>
+              <input
+                type="text"
+                id="gradDate"
+                name="gradDate"
+                value={formData.gradDate}
+                placeholder="05/2026"
                 onChange={handleChange}
               />
             </div>
@@ -212,6 +229,7 @@ const Signup = () => {
                 id="locationPreferences"
                 name="locationPreferences"
                 value={formData.locationPreferences}
+                placeholder="Birmingham, Atlanta, Colorado..."
                 onChange={handleChange}
               />
             </div>
