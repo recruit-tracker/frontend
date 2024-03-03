@@ -27,6 +27,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload"; // Icon for uploa
 // Replace with your API URL
 
 import { API_URL } from "../../constants";
+import "./HrPortal.css";
 
 const searchOptions = [
   { value: "name", label: "Name" },

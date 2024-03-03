@@ -24,3 +24,9 @@
 	font-size: 16px;
   }
   
+
+  .logout-link {
+	text-decoration: none; /* Remove underline */
+	color: white; /* Set text color to white */
+	font-weight: bold; /* Set font weight to bold */
+  }

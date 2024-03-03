@@ -163,9 +163,6 @@ const StudentPortal = () => {
           </DialogActions>
         </Dialog>
       </div>
-      <footer className="studentFooter">
-        Recruiter © 2024
-      </footer>
     </div>
   );
 };

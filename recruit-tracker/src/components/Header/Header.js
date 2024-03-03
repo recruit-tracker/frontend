@@ -1,10 +1,14 @@
-// Header.js
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
 import "./Header.css"; // Make sure the CSS file is in the same folder
 
 const Header = () => {
-  return (
+  const handleLogout = () => {
+    // Clear local storage
+    localStorage.clear();
+  };
+
+ return (
     <div className="header">
       <div className="logo">
         Student Portal{/* Link wraps around the text */}
@@ -12,11 +16,11 @@ const Header = () => {
         {/* <img src="path/to/your/logo.png" alt="Logo" /> */}
       </div>
       <div className="logout">
-        <Link to="/">Logout</Link> {/* Link for the Logout button */}
-        {/* This can be made interactive with an onClick event handler for actual logout functionality */}
+        <Link to="/" onClick={handleLogout} className="logout-link">
+          Logout
+        </Link>{" "} 
       </div>
     </div>
   );
 };
-
 export default Header;
