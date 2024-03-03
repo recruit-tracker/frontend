@@ -270,6 +270,9 @@ const Signup = () => {
             <div className="button-container">
               <button type="submit">Sign Up</button>
             </div>
+            <footer className="studentFooter">
+            Recruiter © 2024
+          </footer>
           </form>
         </div>
       </div>

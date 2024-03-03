@@ -120,6 +120,9 @@ const StudentPortal = () => {
           Save Changes
         </Button>
       </div>
+      <footer className="studentFooter">
+        Recruiter © 2024
+      </footer>
     </div>
   );
 };

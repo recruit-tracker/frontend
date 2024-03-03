@@ -37,3 +37,15 @@
     margin-top: -50px;
     margin-bottom: 15px;
   }
+
+.footerBottom {
+  position: absolute;
+  float: center;
+  margin-left: -22px;
+  width: 98.8vw;
+  height: 30px;
+  color: rgb(230, 230, 230);
+  text-align: center;
+  padding-top: 14px;
+  background-image: linear-gradient(to bottom right, #E31937, #000000);
+}

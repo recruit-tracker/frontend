@@ -108,6 +108,9 @@ const Login = () => {
               Don't have an account? <Link to="/loginform">Sign up</Link>
             </p>
           </div>
+          <footer className="studentFooter">
+            Recruiter © 2024
+          </footer>
         </form>
       </div>
     </div>

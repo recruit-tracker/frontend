@@ -257,7 +257,11 @@ const HrPortal = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <footer className="footerBottom">
+        Recruiter © 2024
+      </footer>
       </div>
+
     </div>
   );
 };

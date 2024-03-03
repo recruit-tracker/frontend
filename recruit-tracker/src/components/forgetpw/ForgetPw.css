@@ -35,3 +35,9 @@ body, html {
     height: 200px;
     gap: 20px; /* Creates space between form elements */
 }
+.button-container-forget{
+    display: flex;
+    justify-content: flex-end; /* Aligns button to the right */
+    margin-top: 30px; /* Adds some space above the button */
+    margin-bottom: 20px;
+}

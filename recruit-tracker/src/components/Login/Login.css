@@ -32,7 +32,7 @@ body, html {
     display: flex;
     flex-direction: column;
     width: 420px;
-    height: 440px;
+    height: 460px;
     gap: 20px; /* Creates space between form elements */
 }
 
@@ -90,3 +90,8 @@ button {
         width: 34vw;
     }
 }
+
+.studentFooter {
+    text-align: center;
+  }
+  

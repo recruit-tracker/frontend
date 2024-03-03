@@ -27,9 +27,12 @@ const ResetPassword = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="button-container">
+                <div className="button-container-forget">
                     <button type="submit">Send Reset Link</button>
                 </div>
+                <footer className="studentFooter">
+                    Recruiter © 2024
+                </footer>
             </form>
             </div>
         </div>

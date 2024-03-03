@@ -8,7 +8,7 @@
     margin-top: auto;
     margin-bottom: auto;
     width: 600px;
-    height: 650px;
+    height: 710px;
     gap: 20px; /* Creates space between form elements */
 }
 .JAYDEN {
@@ -52,7 +52,7 @@ img {
 .button-container {
     display: flex;
     justify-content: flex-end; /* Aligns button to the right */
-    margin-top: 50px; /* Adds some space above the button */
+    margin-top: 30px; /* Adds some space above the button */
 }
 
 @media (max-width: 890px) {
