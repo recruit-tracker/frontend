@@ -1,22 +1,21 @@
 /* HrPortal.css */
 /* HrPortal.css */
 .main-content {
-	margin-top: 16%; /* Adjust the value as needed to ensure proper spacing */
+  height: 90vh;
+  width: 96vw;
   }
   .search-header {
-	display: flex;
-	gap: 10px;
-	margin-bottom: 20px;
-	align-items: center;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
   }
   
   .search-input, .search-select {
-	flex-grow: 1;
+    flex-grow: 1;
   }
   
   .table-container {
-	margin-top: 20px;
+    margin-top: 20px;
   }
-  
-  /* Add additional styling as needed to match your application's theme */
   
