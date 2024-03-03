@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header"; // Adjust this import path as necessary.
 import "./StudentPortal.css"; // Ensure this CSS file exists and is correctly referenced.
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/material/Button"; // Import Button component from Material-UI
+import { API_URL } from "../../constants";
 
 const StudentPortal = () => {
   const [studentInfo, setStudentInfo] = useState({
     name: "Mitchell Kimbell",
     email: "mfkimbell@gmail.com",
-    position: "Intern",
     state: "AL",
     school: "University of Alabama at Birmingham",
     locationPreference: "Remote", // Added new field for location preference
@@ -35,12 +35,43 @@ const StudentPortal = () => {
     if (file) {
       console.log("Uploading:", file.name);
       // Update the resume field in studentInfo state with the file name or upload status
-      setStudentInfo(prevState => ({
+      setStudentInfo((prevState) => ({
         ...prevState,
         resume: file.name, // Assuming you want to display the file name as the status
       }));
     }
   };
+
+  const fetchUserInfo = async () => {
+    const userEmail = localStorage.getItem("email");
+    const form = { content: "", filter: { email: userEmail } };
+
+    const response = await fetch(`${API_URL}/student/query`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    const json = await response.json();
+
+    const user = json["users"][0];
+
+    const userData = {
+      name: user["name"],
+      email: user["email"],
+      state: user["state"],
+      school: user["college"],
+      employment: user["preference"], // Added new field for location preference
+      resume: "Not Uploaded", // Added new field for resume (considering it as a status message)
+    };
+    setStudentInfo(userData);
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   return (
     <div>
@@ -55,10 +86,7 @@ const StudentPortal = () => {
               </span>
               <span className="info-value">
                 {key === "resume" ? (
-                  <Button
-                    variant="outlined"
-                    component="label"
-                  >
+                  <Button variant="outlined" component="label">
                     Upload Resume
                     <input
                       type="file"

@@ -2,39 +2,58 @@ import React, { useState } from "react";
 import "./Login.css"; // Make sure the CSS file is in the same folder
 import logo from "../../images/cgi_logo.png";
 import { Link } from "react-router-dom"; // Import Link for navigation
+import { API_URL } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   // State variables to store username and password
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  function decodeJWT(token) {
+    const base64Url = token.split(".")[1]; // Get the payload part
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/"); // Convert base64-url to base64
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join(""),
+    );
+
+    return JSON.parse(jsonPayload); // Parse the payload to an object
+  }
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
+    const form = { user: { email: username, password: password } };
 
-    // Make fetch request to your backend
     try {
-      const response = await fetch("/student/login", {
+      const response = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(form),
       });
 
       if (response.ok) {
-        // If login successful, navigate to student page or perform other actions
         console.log("Login successful!");
         console.log("repsponse: ", response);
-        // Redirect or perform other actions here
+        let json = await response.json();
+        let token = decodeJWT(json["token"]);
+        console.log(token);
+        localStorage.setItem("role", token["role"]);
+        localStorage.setItem("email", token["email"]);
+        navigate("/student");
       } else {
-        // Handle login failure
         console.log("Login failed!");
-        // Handle login failure scenario, display error message, etc.
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      // Handle error scenario
     }
   };
 

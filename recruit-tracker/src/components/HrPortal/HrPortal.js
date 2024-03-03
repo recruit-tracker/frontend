@@ -85,7 +85,7 @@ const HrPortal = () => {
       student[searchCategory]
         ?.toString()
         .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+        .includes(searchQuery.toLowerCase()),
     );
     setStudents(filteredStudents);
   };
@@ -182,7 +182,6 @@ const HrPortal = () => {
                 {[
                   "Name",
                   "Email",
-
                   "State",
                   "School",
                   "Graduation",

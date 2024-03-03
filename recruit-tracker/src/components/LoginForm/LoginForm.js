@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "./LoginForm.css"; // Ensure there's a corresponding CSS file for styling
 import logo from "../../images/cgi_logo.png";
 import { API_URL } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -110,13 +112,15 @@ const Signup = () => {
           form.append("email", formData.email);
           form.append("resume", formData.resume);
 
-          return fetch(`${API_URL}/upload`, {
+          fetch(`${API_URL}/upload`, {
             method: "POST",
             body: form,
           });
+
+          navigate("/");
         } else {
           throw new Error(
-            "Failed to submit user form with status: " + response.status
+            "Failed to submit user form with status: " + response.status,
           );
         }
       })
