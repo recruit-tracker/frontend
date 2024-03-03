@@ -74,15 +74,40 @@ const HrPortal = () => {
       });
   };
 
-  const handleResume = (email) => {
-    fetch(`${API_URL}/student/resume`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: { email: email } }),
-    });
-  };
+  const handleResume = async (email) => {
+    try {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `${API_URL}/student/resume`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.responseType = "blob"; // Set the expected response type to blob
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Create a link element and trigger a download
+                    const url = window.URL.createObjectURL(xhr.response);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'resume.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    console.error(`HTTP error! Status: ${xhr.status}`);
+                }
+            }
+        };
+
+        // Send the request with the JSON payload
+        xhr.send(JSON.stringify({
+            user: {
+                email: email,
+            },
+        }));
+    } catch (error) {
+        console.error('Error handling the file:', error);
+    }
+};
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
