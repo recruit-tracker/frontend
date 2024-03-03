@@ -23,6 +23,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import DescriptionIcon from "@mui/icons-material/Description"; // Using Description as Resume icon
 // import { students as initialStudents } from "../../testData/testStudents";
 import "./HrPortal.css"; // Adjust the path as necessary
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'; // Icon for upload
 
 // Replace with your API URL
 
@@ -126,6 +127,22 @@ const HrPortal = () => {
       <div className="main-content">
         <div className="search-controls">
           <h2>Candidates</h2>
+          <div className="buttonWrapper">
+          <Button
+            className="uploadCSV"
+            variant="contained"
+            component="label"
+            startIcon={<CloudUploadIcon />}
+          >
+            Import CSV
+            <input
+              type="file"
+              hidden
+              accept=".csv"
+              // onChange={handleFileUpload}  just implement logic
+          />
+          </Button>
+          </div>
           <div className="search-header">
             <TextField
               style={{ marginRight: "1%" }}

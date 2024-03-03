@@ -18,4 +18,22 @@
   .table-container {
     margin-top: 20px;
   }
+  h2 {
+
+    display: inline-block;
+  }
   
+  .uploadCSV {
+    margin-left: auto;
+    display: inline-block;
+  }
+
+  .buttonWrapper {
+    width: 99.8%;
+    max-height: 30px;
+    display: flex;
+    align-items: right;
+    justify-content: flex-end;
+    margin-top: -50px;
+    margin-bottom: 15px;
+  }
