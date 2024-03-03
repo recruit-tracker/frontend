@@ -52,19 +52,33 @@ img {
 .button-container {
     display: flex;
     justify-content: flex-end; /* Aligns button to the right */
-    margin-top: 30px; /* Adds some space above the button */
+
+}
+@media (max-width: 1106px) {
+    .signup-container {
+        width: 380px;
+        height: 700px;
+        margin-top: 180px;
+    }
+    .JAYDEN {
+        height: 150vh; 
+    }
 }
 
 @media (max-width: 890px) {
     .signup-container {
         width: 380px;
-        height: 620px;
+        height: 700px;
+        margin-top: 180px;
+    }
+    .JAYDEN {
+        height: 150vh; 
     }
 }
 @media (max-width: 590px) {
     .signup-container {
         width: 279px;
-        height: 620px;
+        height: 680px;
     }
     .signup-container{
         display: block;
@@ -72,17 +86,28 @@ img {
     label {
         font-size: 13px;
     }
+    .signup-container {
+        height: 710px;
+        margin-top: 100px;
+    }
+    .JAYDEN {
+        height: 130vh; 
+    }
 }
 
 @media (max-width: 280px) {
     .signup-container {
         width: 240px;
-        height: 620px;
+        height: 700px;
+        margin-top: 120px;
     }
     .signup-container{
         display: block;
     }
     label {
         font-size: 10px;
+    }
+    .JAYDEN {
+        height: 140vh; 
     }
 }
