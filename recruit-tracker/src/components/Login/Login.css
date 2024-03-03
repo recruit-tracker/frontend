@@ -78,3 +78,15 @@ button {
     /* border: 1px solid red; */
     margin-top: -5px;
 }
+
+@media (max-width: 399px) {
+    .signup hr {
+        width: 38vw;
+    }
+}
+
+@media (max-width: 315px) {
+    .signup hr {
+        width: 34vw;
+    }
+}
