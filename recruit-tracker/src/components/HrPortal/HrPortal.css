@@ -2,7 +2,7 @@
 /* HrPortal.css */
 .main-content {
   height: 90vh;
-  width: 100vw;
+  width: 96vw;
   }
   .search-header {
     display: flex;
@@ -15,12 +15,13 @@
     flex-grow: 1;
     
   }
-  
-  .table-container {
-    margin-top: 20px;
+  .search-controls {
+    width: 96vw;
   }
-  h2 {
-    margin-left: 15px;
+  
+
+  .uploadCSV {
+    margin-left: auto;
   }
   
 
@@ -28,10 +29,10 @@
     width: 100vw;
     max-height: 30px;
     display: flex;
-    align-items: right;
     justify-content: flex-end;
     margin-top: -50px;
     margin-bottom: 15px;
+    margin-left: -4.2%;
   }
 
 .footerBottom {
