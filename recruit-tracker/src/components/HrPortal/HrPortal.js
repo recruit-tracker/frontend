@@ -74,6 +74,16 @@ const HrPortal = () => {
       });
   };
 
+  const handleResume = (email) => {
+    fetch(`${API_URL}/student/resume`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: { email: email } }),
+    });
+  };
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -84,7 +94,7 @@ const HrPortal = () => {
       student[searchCategory]
         ?.toString()
         .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+        .includes(searchQuery.toLowerCase()),
     );
     setStudents(filteredStudents);
   };
@@ -235,7 +245,7 @@ const HrPortal = () => {
                   <TableCell>
                     <IconButton
                       aria-label="Resume"
-                      onClick={() => window.open(student.resume, "_blank")}
+                      onClick={() => handleResume(student.email)}
                     >
                       <DescriptionIcon />
                     </IconButton>
