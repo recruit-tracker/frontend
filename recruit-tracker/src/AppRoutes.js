@@ -5,7 +5,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import StudentPortal from "./components/StudentPortal/StudentPortal";
 import HrPortal from "./components/HrPortal/HrPortal";
 import HrSingleProfile from "./components/HrSingleProfile/HrSingleProfile";
-import ForgetPw from "./components/ForgetPw/ForgetPw";
+import ForgetPw from "./components/forgetpw/ForgetPw";
 
 const AppRoutes = () => {
   return (

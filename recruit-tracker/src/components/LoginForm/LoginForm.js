@@ -1,58 +1,106 @@
-import React, { useState } from 'react';
-import './LoginForm.css'; // Ensure there's a corresponding CSS file for styling
+import React, { useState } from "react";
+import "./LoginForm.css"; // Ensure there's a corresponding CSS file for styling
 import logo from "../../images/cgi_logo.png";
+import { API_URL } from "../../constants";
 
 const Signup = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        preference: '', // Internship or Full-time
-        state: '', // Using state abbreviation
-        college: '',
-        resume: null, // Added for resume file
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    preference: "", // Internship or Full-time
+    state: "", // Using state abbreviation
+    college: "",
+    resume: null, // Added for resume file
+  });
+
+  // Array of U.S. state abbreviations
+  const stateAbbreviations = [
+    "AL",
+    "AK",
+    "AZ",
+    "AR",
+    "CA",
+    "CO",
+    "CT",
+    "DE",
+    "FL",
+    "GA",
+    "HI",
+    "ID",
+    "IL",
+    "IN",
+    "IA",
+    "KS",
+    "KY",
+    "LA",
+    "ME",
+    "MD",
+    "MA",
+    "MI",
+    "MN",
+    "MS",
+    "MO",
+    "MT",
+    "NE",
+    "NV",
+    "NH",
+    "NJ",
+    "NM",
+    "NY",
+    "NC",
+    "ND",
+    "OH",
+    "OK",
+    "OR",
+    "PA",
+    "RI",
+    "SC",
+    "SD",
+    "TN",
+    "TX",
+    "UT",
+    "VT",
+    "VA",
+    "WA",
+    "WV",
+    "WI",
+    "WY",
+  ];
+
+  const handleChange = (e) => {
+    const { name } = e.target;
+    const value = e.target.type === "file" ? e.target.files[0] : e.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // For demonstration, logging formData. You would replace this with your API call.
+    console.log("Form data submitted:", formData);
+
+    // If you need to send the data to a server:
+    const formDataToSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, value);
     });
+    console.log("formdatatosend", formDataToSend);
 
-    // Array of U.S. state abbreviations
-    const stateAbbreviations = [
-        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", 
-        "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", 
-        "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", 
-        "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
-        "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
-    ];
+    // Example of sending the formDataToSend using fetch (replace 'YOUR_BACKEND_ENDPOINT' with your actual endpoint)
+    fetch(`${API_URL}/student`, {
+      method: "POST",
+      body: formDataToSend,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
+  };
 
-    const handleChange = (e) => {
-        const { name } = e.target;
-        const value = e.target.type === 'file' ? e.target.files[0] : e.target.value;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // For demonstration, logging formData. You would replace this with your API call.
-        console.log('Form data submitted:', formData);
-
-        // If you need to send the data to a server:
-        const formDataToSend = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-            formDataToSend.append(key, value);
-        });
-
-        // Example of sending the formDataToSend using fetch (replace 'YOUR_BACKEND_ENDPOINT' with your actual endpoint)
-        // fetch('YOUR_BACKEND_ENDPOINT', {
-        //     method: 'POST',
-        //     body: formDataToSend,
-        // }).then(response => response.json())
-        // .then(data => console.log(data))
-        // .catch(error => console.error('Error:', error));
-    };
-
-    return (
+  return (
         <div className="JAYDEN">
             <div className="JAY">
             <div className="signup-container">
@@ -149,4 +197,4 @@ const Signup = () => {
         );
     };
     
-    export default Signup;
+export default Signup;
