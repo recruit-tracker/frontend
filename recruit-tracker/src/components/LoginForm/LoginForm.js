@@ -80,121 +80,151 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // For demonstration, logging formData. You would replace this with your API call.
-    console.log("Form data submitted:", formData);
+    const userForm = {};
+    userForm["name"] = formData.name;
+    userForm["email"] = formData.email;
+    userForm["password"] = formData.password;
+    userForm["preference"] = formData.preference;
+    userForm["state"] = formData.state;
+    userForm["college"] = formData.college;
+    userForm["locationPreferences"] = formData.locationPreferences;
 
-    // If you need to send the data to a server:
-    const formDataToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      formDataToSend.append(key, value);
-    });
-    console.log("formdatatosend", formDataToSend);
+    let statusCode;
 
-    // Example of sending the formDataToSend using fetch (replace 'YOUR_BACKEND_ENDPOINT' with your actual endpoint)
     fetch(`${API_URL}/student`, {
       method: "POST",
-      body: formDataToSend,
+      body: JSON.stringify({ user: userForm }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        statusCode = response.status;
+      })
       .then((data) => console.log(data))
       .catch((error) => console.error("Error:", error));
+
+    if (statusCode == 200) {
+      const form = new FormData();
+
+      form.append("email", formData.email);
+      form.append("resume", formData.resume);
+
+      fetch(`${API_URL}/upload`, {
+        method: "POST",
+        body: form,
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error("Error:", error));
+    }
   };
 
   return (
-        <div className="JAYDEN">
-            <div className="JAY">
-            <div className="signup-container">
-                <img src={logo} alt="Company logo" width="106.68" height="50" />
-                <form className="signup-form" onSubmit={handleSubmit}>
-                    <h2>Create Account</h2>
-                    <div className="form-control">
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-control">
-                        <label>Employment</label>
-                        <select name="preference" value={formData.preference} onChange={handleChange} required>
-                            <option value="">Select...</option>
-                            <option value="internship">Internship</option>
-                            <option value="full-time">Full-Time</option>
-                        </select>
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="state">State</label>
-                        <select id="state" name="state" value={formData.state} onChange={handleChange} required>
-                            <option value="">Select...</option>
-                            {stateAbbreviations.map(abbreviation => (
-                                <option key={abbreviation} value={abbreviation}>{abbreviation}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="college">College</label>
-                        <input
-                            type="text"
-                            id="college"
-                            name="college"
-                            value={formData.college}
-                            onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-control">
-                        <label htmlFor="locationPreferences">Location Preferences</label>
-                        <input
-                            type="text"
-                            id="locationPreferences"
-                            name="locationPreferences"
-                            value={formData.locationPreferences}
-                            onChange={handleChange}
-                        />
-                        </div>
-                        <div className="form-control">
-                            <label htmlFor="resume">Resume</label>
-                            <input
-                                type="file"
-                                id="resume"
-                                name="resume"
-                                accept="application/pdf"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="button-container">
-                            <button type="submit">Sign Up</button>
-                        </div>
-                    </form>
-                    </div>
-                </div>
+    <div className="JAYDEN">
+      <div className="JAY">
+        <div className="signup-container">
+          <img src={logo} alt="Company logo" width="106.68" height="50" />
+          <form className="signup-form" onSubmit={handleSubmit}>
+            <h2>Create Account</h2>
+            <div className="form-control">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
             </div>
-        );
-    };
-    
+            <div className="form-control">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label>Employment</label>
+              <select
+                name="preference"
+                value={formData.preference}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select...</option>
+                <option value="internship">Internship</option>
+                <option value="full-time">Full-Time</option>
+              </select>
+            </div>
+            <div className="form-control">
+              <label htmlFor="state">State</label>
+              <select
+                id="state"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select...</option>
+                {stateAbbreviations.map((abbreviation) => (
+                  <option key={abbreviation} value={abbreviation}>
+                    {abbreviation}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-control">
+              <label htmlFor="college">College</label>
+              <input
+                type="text"
+                id="college"
+                name="college"
+                value={formData.college}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control">
+              <label htmlFor="locationPreferences">Location Preferences</label>
+              <input
+                type="text"
+                id="locationPreferences"
+                name="locationPreferences"
+                value={formData.locationPreferences}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-control">
+              <label htmlFor="resume">Resume</label>
+              <input
+                type="file"
+                id="resume"
+                name="resume"
+                accept="application/pdf"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="button-container">
+              <button type="submit">Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default Signup;
