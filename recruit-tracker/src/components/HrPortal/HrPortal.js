@@ -74,57 +74,60 @@ const HrPortal = () => {
       });
   };
 
-  function csvToJson(csv) {
-    const lines = csv.split("\n");
-    const result = [];
-    const headers = lines[0].split(",");
+  // function csv_to_JSON(path) {
+  //   const response =  fetch(`${API_URL}/hr/import`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ json: json }),
+  //   });
 
-    for (let i = 1; i < lines.length; i++) {
-      if (!lines[i]) continue;
-      const obj = {};
-      const currentline = lines[i].split(",");
-
-      for (let j = 0; j < headers.length; j++) {
-        obj[headers[j]] = currentline[j];
-      }
-
-      result.push(obj);
-    }
-
-    return result; // This will return a JSON array of objects
-  }
+  // // }
+  // function csvToJson(csv) {
+  //   const lines = csv.split('\n');
+  //   const headers = lines[0].split(',');
+  
+  //   const result = [];
+  
+  //   for (let i = 1; i < lines.length; i++) {
+  //     const currentLine = lines[i].split(',');
+  //     const obj = {};
+  
+  //     for (let j = 0; j < headers.length; j++) {
+  //       obj[headers[j]] = currentLine[j];
+  //     }
+  
+  //     result.push(obj);
+  //   }
+  
+  //   return result;
+  // }
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-
+  
     if (file) {
-      const reader = new FileReader();
-
-      reader.onload = async (e) => {
-        const text = e.target.result;
-        const json = csvToJson(text);
-
-        try {
-          const response = await fetch(`${API_URL}/hr/import`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ path: json }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          console.log("Import successful", data);
-        } catch (error) {
-          console.error("Error during import:", error);
+      const formData = new FormData();
+      formData.append("file", file);
+  
+      try {
+        const response = await fetch(`${API_URL}/hr/import`, {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`HTTP error! status: ${response.status}, ${errorText}`);
+          throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
         }
-      };
-
-      reader.readAsText(file);
+  
+        const data = await response.json();
+        console.log("Import successful", data);
+      } catch (error) {
+        console.error("Error during import:", error);
+      }
     }
   };
 
