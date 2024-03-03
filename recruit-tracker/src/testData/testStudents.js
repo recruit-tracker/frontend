@@ -1,6 +1,5 @@
 export const students = [
   {
-    
     name: "Mitchell Kimbell",
     email: "mfkimbell@gmail.com",
     phone: "2053128982",
@@ -10,7 +9,7 @@ export const students = [
     position: "Intern",
     officeLocation: "Birmingham",
     stage: "first-round",
-    interest: 8,
+    interest: null,
     linkedIn: "https://www.linkedin.com/in/mitchell-kimbell-mscs-3384191a1/",
     resume: "link-to-resume", // Assuming this is a URL to the resume
     feedback: {
@@ -19,7 +18,6 @@ export const students = [
     },
   },
   {
-    
     name: "Alex Johnson",
     email: "alex.johnson@example.com",
     phone: "4085550123",
@@ -29,7 +27,7 @@ export const students = [
     position: "Full-time",
     officeLocation: "San Francisco",
     stage: "second-round",
-    interest: 9,
+    interest: null,
     linkedIn: "https://www.linkedin.com/in/alex-johnson/",
     resume: "link-to-resume", // Assuming this is also a URL
     feedback: {
@@ -39,4 +37,3 @@ export const students = [
   },
   // Additional student entries as needed
 ];
-

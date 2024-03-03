@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import HrHeader from "../HrHeader/HrHeader";
+import HrHeaderSingle from "../HrHeaderSingle/HrHeaderSingle";
 import {
   Button,
   Grid,
   IconButton,
+  InputAdornment,
   TextField,
   Tooltip,
   Typography,
@@ -16,9 +17,13 @@ import {
   Paper,
   Select,
   MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import DescriptionIcon from "@mui/icons-material/Description";
 import { students } from "../../testData/testStudents"; // Adjust the import path as necessary
 
 const HrSingleProfile = () => {
@@ -61,7 +66,7 @@ const HrSingleProfile = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <HrHeader />
+      <HrHeaderSingle />
       <div
         className="main-content"
         style={{
@@ -75,44 +80,87 @@ const HrSingleProfile = () => {
           Profile Information
         </Typography>
         <Grid container spacing={2} style={{ marginBottom: "20px" }}>
-          {Object.entries(profileInfo).map(([key, value]) =>
-            key !== "id" && key !== "feedback" ? (
-              <Grid item xs={12} sm={6} key={key}>
-                {key === "stage" || key === "position" ? (
-                  <Select
-                    fullWidth
-                    displayEmpty
-                    value={value}
-                    onChange={(e) => handleFieldChange(e, key)}
-                    variant="outlined"
-                  >
-                    {key === "stage" ? (
+          {Object.entries(profileInfo).map(([key, value]) => {
+            const isSelectField = key === "stage" || key === "position";
+            return (
+              key !== "id" &&
+              key !== "feedback" && (
+                <Grid item xs={12} sm={6} key={key}>
+                  <FormControl fullWidth variant="outlined">
+                    {isSelectField ? (
                       <>
-                        <MenuItem value="Applying">Applying</MenuItem>
-                        <MenuItem value="Reviewed">Reviewed</MenuItem>
-                        <MenuItem value="Interviewed">Interviewed</MenuItem>
-                        <MenuItem value="Offered">Offered</MenuItem>
+                        <InputLabel>
+                          {key.charAt(0).toUpperCase() + key.slice(1)}
+                        </InputLabel>
+                        <Select
+                          value={value}
+                          onChange={(e) => handleFieldChange(e, key)}
+                          label={key.charAt(0).toUpperCase() + key.slice(1)}
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          {key === "stage" ? (
+                            <>
+                              <MenuItem value="Applying">Applying</MenuItem>
+                              <MenuItem value="Reviewed">Reviewed</MenuItem>
+                              <MenuItem value="Interviewed">
+                                Interviewed
+                              </MenuItem>
+                              <MenuItem value="Offered">Offered</MenuItem>
+                            </>
+                          ) : (
+                            <>
+                              <MenuItem value="Full Time">Full Time</MenuItem>
+                              <MenuItem value="Part Time">Part Time</MenuItem>
+                              <MenuItem value="Intern">Intern</MenuItem>
+                            </>
+                          )}
+                        </Select>
                       </>
                     ) : (
-                      <>
-                        <MenuItem value="Full Time">Full Time</MenuItem>
-                        <MenuItem value="Part Time">Part Time</MenuItem>
-                        <MenuItem value="Intern">Intern</MenuItem>
-                      </>
+                      <TextField
+                        fullWidth
+                        label={key.charAt(0).toUpperCase() + key.slice(1)}
+                        value={value}
+                        onChange={(e) => handleFieldChange(e, key)}
+                        variant="outlined"
+                        InputProps={{
+                          startAdornment:
+                            key === "linkedin" ? (
+                              <InputAdornment position="start">
+                                <IconButton
+                                  onClick={() => window.open(value, "_blank")}
+                                >
+                                  <LinkedInIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            ) : key === "resume" ? (
+                              <InputAdornment position="start">
+                                <IconButton
+                                  onClick={() => window.open(value, "_blank")}
+                                >
+                                  <DescriptionIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            ) : null,
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Tooltip title="Edit">
+                                <IconButton>
+                                  <EditIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     )}
-                  </Select>
-                ) : (
-                  <TextField
-                    fullWidth
-                    label={key.charAt(0).toUpperCase() + key.slice(1)}
-                    value={value}
-                    onChange={(e) => handleFieldChange(e, key)}
-                    variant="outlined"
-                  />
-                )}
-              </Grid>
-            ) : null
-          )}
+                  </FormControl>
+                </Grid>
+              )
+            );
+          })}
         </Grid>
         <Typography variant="h5" gutterBottom>
           Feedback
