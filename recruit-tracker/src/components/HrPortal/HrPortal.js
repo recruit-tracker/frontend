@@ -1,5 +1,6 @@
-import React from "react";
-import Header from "../Header/Header"; // Adjust the import path as necessary.
+// HrPortal.js
+import React, { useState } from "react";
+import HrHeader from "../HrHeader/HrHeader";
 import {
   Table,
   TableBody,
@@ -8,36 +9,104 @@ import {
   TableHead,
   TableRow,
   Paper,
+  IconButton,
+  TextField,
+  MenuItem,
+  InputAdornment,
   Button,
 } from "@mui/material";
-import { students } from "../../testData/testStudents"; // Adjust the import path based on your file structure.
+import SearchIcon from "@mui/icons-material/Search";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import DescriptionIcon from "@mui/icons-material/Description"; // Using Description as Resume icon
+import { students as initialStudents } from "../../testData/testStudents";
+import "./HrPortal.css"; // Adjust the path as necessary
+
+const searchOptions = [
+  { value: "name", label: "Name" },
+  { value: "state", label: "State" },
+  { value: "school", label: "School" },
+  { value: "position", label: "Position" },
+  { value: "officeLocation", label: "Office Location" },
+  { value: "interest", label: "Interest" },
+];
 
 const HrPortal = () => {
-  const handleUpdate = (email) => {
-    console.log("Update requested for:", email);
-    // Implement the update logic or set state here
+  const [students, setStudents] = useState(initialStudents);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchCategory, setSearchCategory] = useState(searchOptions[0].value);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
-  // Inline style for table cell borders and table layout
-  const cellStyle = {
-    borderRight: "1px solid rgba(224, 224, 224, 1)", // Adds a border to the right of each cell
+  const handleSubmit = () => {
+    const filteredStudents = initialStudents.filter((student) =>
+      student[searchCategory]
+        ?.toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+    );
+    setStudents(filteredStudents);
   };
 
   return (
-    <div>
-      <Header />
+    <div className="portal-container">
+      <HrHeader />
       <div className="main-content">
-        <h2>HR Dashboard</h2>
-        <TableContainer
-          component={Paper}
-          style={{ boxShadow: "0px 0px 10px rgba(0,0,0,0.1)" }}
-        >
-          {" "}
-          {/* Adds a subtle shadow to the table container for depth */}
-          <Table aria-label="student data table" style={{ minWidth: 650 }}>
+        <div className="search-controls">
+          <h2>Candidates</h2>
+          <TextField
+            style={{ marginRight: "1%" }}
+            size="small"
+            label="Search"
+            variant="outlined"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="search-input"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            style={{ marginRight: "1%" }}
+            select
+            size="small"
+            variant="outlined"
+            value={searchCategory}
+            onChange={(e) => setSearchCategory(e.target.value)}
+            className="search-select"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <FilterListIcon />
+                </InputAdornment>
+              ),
+            }}
+          >
+            {searchOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            style={{ height: "fit-content" }} // Adjust the style as needed
+          >
+            Search
+          </Button>
+        </div>
+        <TableContainer component={Paper} className="table-container">
+          <Table aria-label="candidate table">
             <TableHead>
               <TableRow>
-                {/* Table headers */}
                 {[
                   "Name",
                   "Email",
@@ -50,57 +119,40 @@ const HrPortal = () => {
                   "Stage",
                   "Interest",
                   "LinkedIn",
-                  "Actions",
+                  "Resume",
                 ].map((header) => (
-                  <TableCell
-                    key={header}
-                    style={{
-                      ...cellStyle,
-                      backgroundColor: "#f5f5f5",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {header}
-                  </TableCell> // Adds custom styling to headers
+                  <TableCell key={header}>{header}</TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
               {students.map((student) => (
-                <TableRow key={student.id} hover>
-                  {" "}
-                  {/* Adds hover effect to rows */}
-                  <TableCell style={cellStyle}>{student.name}</TableCell>
-                  <TableCell style={cellStyle}>{student.email}</TableCell>
-                  <TableCell style={cellStyle}>{student.phone}</TableCell>
-                  <TableCell style={cellStyle}>{student.state}</TableCell>
-                  <TableCell style={cellStyle}>{student.school}</TableCell>
-                  <TableCell style={cellStyle}>{student.graduation}</TableCell>
-                  <TableCell style={cellStyle}>{student.position}</TableCell>
-                  <TableCell style={cellStyle}>
-                    {student.officeLocation}
-                  </TableCell>
-                  <TableCell style={cellStyle}>{student.stage}</TableCell>
-                  <TableCell style={cellStyle}>{student.interest}</TableCell>
-                  <TableCell style={cellStyle}>
-                    <a
-                      href={student.linkedIn}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ textDecoration: "none", color: "#1976d2" }}
+                <TableRow key={student.email}>
+                  <TableCell>{student.name}</TableCell>
+                  <TableCell>{student.email}</TableCell>
+                  <TableCell>{student.phone}</TableCell>
+                  <TableCell>{student.state}</TableCell>
+                  <TableCell>{student.school}</TableCell>
+                  <TableCell>{student.graduation}</TableCell>
+                  <TableCell>{student.position}</TableCell>
+                  <TableCell>{student.officeLocation}</TableCell>
+                  <TableCell>{student.stage}</TableCell>
+                  <TableCell>{student.interest}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      aria-label="LinkedIn"
+                      onClick={() => window.open(student.linkedIn, "_blank")}
                     >
-                      View
-                    </a>
+                      <LinkedInIcon />
+                    </IconButton>
                   </TableCell>
                   <TableCell>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleUpdate(student.email)}
-                      style={{ marginLeft: "auto", marginRight: 0 }}
+                    <IconButton
+                      aria-label="Resume"
+                      onClick={() => window.open(student.resume, "_blank")}
                     >
-                      Update
-                    </Button>
+                      <DescriptionIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

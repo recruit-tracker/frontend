@@ -1,36 +1,22 @@
 /* HrPortal.css */
-.students-table {
-	width: 100%;
-	border-collapse: collapse;
+/* HrPortal.css */
+.main-content {
+	margin-top: 17%; /* Adjust the value as needed to ensure proper spacing */
+  }
+  .search-header {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 20px;
+	align-items: center;
+  }
+  
+  .search-input, .search-select {
+	flex-grow: 1;
+  }
+  
+  .table-container {
 	margin-top: 20px;
   }
   
-  .students-table th,
-  .students-table td {
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd; /* Add a bottom border to each table cell */
-  }
-
-  .students-table th {
-	background-color: #004d99;
-	color: white;
-  }
-  
-  .students-table tr:nth-child(even) {
-	background-color: #f2f2f2; /* Zebra striping for rows */
-  }
-  
-  .students-table tr:hover {
-	background-color: #ddd; /* Hover effect for rows */
-  }
-  
-  .students-table a {
-	color: #007bff;
-	text-decoration: none;
-  }
-  
-  .students-table a:hover {
-	text-decoration: underline;
-  }
+  /* Add additional styling as needed to match your application's theme */
   

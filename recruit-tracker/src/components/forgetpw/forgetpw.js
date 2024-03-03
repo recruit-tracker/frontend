@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './forgetpw.css';
+import './ForgetPw.css';
 import logo from "../../images/cgi_logo.png";
 
 const ResetPassword = () => {

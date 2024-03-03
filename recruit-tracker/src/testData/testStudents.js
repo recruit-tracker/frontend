@@ -45,7 +45,7 @@ export const students = [
     position: "Intern",
     officeLocation: "New York City",
     stage: "final-round",
-    interest: null,
+    interest: 4,
     linkedIn: "https://www.linkedin.com/in/jessica-smith/",
     resume: "link-to-resume",
     feedback: {
@@ -82,7 +82,7 @@ export const students = [
     position: "Intern",
     officeLocation: "Boston",
     stage: "second-round",
-    interest: null,
+    interest: 4,
     linkedIn: "https://www.linkedin.com/in/emily-wilson/",
     resume: "link-to-resume",
     feedback: {
