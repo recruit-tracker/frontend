@@ -8,12 +8,12 @@ import { API_URL } from "../../constants";
 
 const StudentPortal = () => {
   const [studentInfo, setStudentInfo] = useState({
-    name: "Mitchell Kimbell",
-    email: "mfkimbell@gmail.com",
-    state: "AL",
-    school: "University of Alabama at Birmingham",
-    locationPreference: "Remote", // Added new field for location preference
-    resume: "Not Uploaded", // Added new field for resume (considering it as a status message)
+    name: "",
+    email: "",
+    state: "",
+    school: "",
+    locationPreference: "", // Added new field for location preference
+    resume: "", // Added new field for resume (considering it as a status message)
   });
 
   const handleEdit = (field) => {
@@ -63,7 +63,7 @@ const StudentPortal = () => {
       email: user["email"],
       state: user["state"],
       school: user["college"],
-      employment: user["preference"], // Added new field for location preference
+      position: user["position"], // Added new field for location preference
       resume: "Not Uploaded", // Added new field for resume (considering it as a status message)
     };
     setStudentInfo(userData);
