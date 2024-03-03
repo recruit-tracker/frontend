@@ -29,14 +29,16 @@ import { students } from "../../testData/testStudents"; // Adjust the import pat
 
 const HrSingleProfile = () => {
   const location = useLocation();
-  const { student } = location.state || {};
-  console.log("student", student);
+  const { student: originalStudent } = location.state || {};
+  const { _id, ...studentWithoutId } = originalStudent || {};
+
+  console.log("student", studentWithoutId);
   console.log("previous", students[0]);
   const [profileInfo, setProfileInfo] = useState({
-    ...student,
-    feedback: Array.isArray(student.feedback)
-      ? student.feedback
-      : Object.entries(student.feedback || {}).map(([reviewer, text]) => ({
+    ...studentWithoutId,
+    feedback: Array.isArray(studentWithoutId.feedback)
+      ? studentWithoutId.feedback
+      : Object.entries(studentWithoutId.feedback || {}).map(([reviewer, text]) => ({
           reviewer,
           text,
         })),

@@ -87,7 +87,7 @@ const Signup = () => {
       name: formData.name,
       email: formData.email,
       password: formData.password,
-      preference: formData.preference,
+
       state: formData.state,
       college: formData.college,
       locationPreferences: formData.locationPreferences,
@@ -97,6 +97,7 @@ const Signup = () => {
       resume: null,
       feedback: { "": "" },
       linkedIn: formData.linkedIn,
+      interest: "",
     };
 
     fetch(`${API_URL}/student`, {
