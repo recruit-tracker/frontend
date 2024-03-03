@@ -80,41 +80,49 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const userForm = {};
-    userForm["name"] = formData.name;
-    userForm["email"] = formData.email;
-    userForm["password"] = formData.password;
-    userForm["preference"] = formData.preference;
-    userForm["state"] = formData.state;
-    userForm["college"] = formData.college;
-    userForm["locationPreferences"] = formData.locationPreferences;
-
-    let statusCode;
+    const userForm = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      preference: formData.preference,
+      state: formData.state,
+      college: formData.college,
+      locationPreferences: formData.locationPreferences,
+    };
 
     fetch(`${API_URL}/student`, {
       method: "POST",
       body: JSON.stringify({ user: userForm }),
     })
       .then((response) => {
-        statusCode = response.status;
+        if (response.status === 200) {
+          const form = new FormData();
+          form.append("email", formData.email);
+          form.append("resume", formData.resume);
+
+          return fetch(`${API_URL}/upload`, {
+            method: "POST",
+            body: form,
+          });
+        } else {
+          throw new Error(
+            "Failed to submit user form with status: " + response.status,
+          );
+        }
       })
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
-
-    if (statusCode == 200) {
-      const form = new FormData();
-
-      form.append("email", formData.email);
-      form.append("resume", formData.resume);
-
-      fetch(`${API_URL}/upload`, {
-        method: "POST",
-        body: form,
+      .then((uploadResponse) => {
+        if (uploadResponse) {
+          return uploadResponse.json();
+        }
       })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error("Error:", error));
-    }
+      .then((uploadData) => {
+        if (uploadData) {
+          console.log(uploadData);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
