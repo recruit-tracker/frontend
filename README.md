@@ -1,6 +1,6 @@
 # Recruit Tracker
 
-### This is one of three repositories for this project. To see the database and backend go to the organization page.
+This is one of three repositories for this project. To see the database and backend go to the organization page.
 ### Tools Used
 * `React` For rendering jsx elements and creating UI
 * `Npm` Package management and frontend server management
