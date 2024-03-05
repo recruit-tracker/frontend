@@ -46,7 +46,8 @@ Recruiters can either add feedback manually with the `+` button, they can also u
 ![UpdatingStudentInfo-1](https://github.com/ua-innovate-cgi/frontend/assets/107063397/8bc5476e-51e1-4cca-9c74-00a1663ce902)
 
 
-
+### Authentication
+![Authentication-copy](https://github.com/ua-innovate-cgi/frontend/assets/107063397/de726ee3-5104-4370-8e3d-b24e1004743c)
 
 
 
