@@ -36,11 +36,11 @@ This is one of three repositories for this project. To see the database and back
 ![editCandidate](https://github.com/ua-innovate-cgi/frontend/assets/107063397/b202024c-9440-40cf-944b-586e19582b62)
 
 ### AI Feedback
+Recruiters can either add feedback manually with the `+` button, they can also use AI. This is produced by parsing of the uploaded resume and a call to OpenAI. 
 ![AIFeedback-copy-1](https://github.com/ua-innovate-cgi/frontend/assets/107063397/a02dc539-ee31-4b11-83b1-80f2bd48c4e7)
 
 
 ### Updating Student
-
 ![UpdatingStudentInfo-1](https://github.com/ua-innovate-cgi/frontend/assets/107063397/8bc5476e-51e1-4cca-9c74-00a1663ce902)
 
 
