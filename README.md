@@ -8,6 +8,7 @@ This is one of three repositories for this project. To see the database and back
 * `Docker` Containerization of frontend, backend, and database
 * `FastAPI` Python api creating routes for MongoDB and OpenAI queries
 * `JWT Tokens` For login authentication and authorization preventing students accessing HR platform
+* `MongoDB` For candidate data tracking
 ### Architecture
 <img width="800" alt="share-map" src="https://github.com/ua-innovate-cgi/frontend/assets/107063397/66cc13e6-0752-437a-bff3-2078fb8793ae">
 
@@ -21,4 +22,26 @@ This is one of three repositories for this project. To see the database and back
 ### Candidate Portal
 
 <img width="750" alt="Screenshot 2024-03-04 at 3 40 36 PM" src="https://github.com/ua-innovate-cgi/frontend/assets/107063397/009cd138-7ca6-4240-80c1-9314bb91d6f5">
+
+### Candidate Portal
+
+<img width="1504" alt="Screenshot 2024-03-04 at 10 40 28 PM" src="https://github.com/ua-innovate-cgi/frontend/assets/107063397/7954478b-9ef6-452a-9646-ed5b95267014">
+
+### Using Search Functionality
+
+![searchFunction-copy-2](https://github.com/ua-innovate-cgi/frontend/assets/107063397/5b5653e9-599b-4080-a1ac-19d35785b89a)
+
+### Editing Candidate Profile
+
+![editCandidate](https://github.com/ua-innovate-cgi/frontend/assets/107063397/b202024c-9440-40cf-944b-586e19582b62)
+
+### AI Feedback
+![AIFeedback-copy-1](https://github.com/ua-innovate-cgi/frontend/assets/107063397/a02dc539-ee31-4b11-83b1-80f2bd48c4e7)
+
+
+
+
+
+
+
 
