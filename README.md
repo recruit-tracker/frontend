@@ -39,6 +39,9 @@ This is one of three repositories for this project. To see the database and back
 ![AIFeedback-copy-1](https://github.com/ua-innovate-cgi/frontend/assets/107063397/a02dc539-ee31-4b11-83b1-80f2bd48c4e7)
 
 
+### Updating Student
+
+![UpdatingStudentInfo-1](https://github.com/ua-innovate-cgi/frontend/assets/107063397/8bc5476e-51e1-4cca-9c74-00a1663ce902)
 
 
 
