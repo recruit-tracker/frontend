@@ -12,7 +12,7 @@ This is one of three repositories for this project. To see the database and back
 * `JWT Tokens` For login authentication and authorization preventing students accessing HR platform
 * `MongoDB` For candidate data tracking
 ### Architecture
-<img width="800" alt="share-map" src="https://github.com/ua-innovate-cgi/frontend/assets/107063397/66cc13e6-0752-437a-bff3-2078fb8793ae">
+
 
 ##### This is a CRUD (Create Read Update Delete) Application implemented with MongoDB. So students can `create` data. Recruiters can `read` data by searching via different fields. Both recruiters and candidates can `update` their data, and only recruiters can `delete` candidates. 
 
