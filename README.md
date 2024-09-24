@@ -11,8 +11,11 @@ This is one of three repositories for this project. To see the database and back
 * `FastAPI` Python api creating routes for MongoDB and OpenAI queries
 * `JWT Tokens` For login authentication and authorization preventing students accessing HR platform
 * `MongoDB` For candidate data tracking
+* 
 ### Architecture
-<img width="750" alt="Screenshot 2024-03-04 at 3 39 14 PM" src="https://github.com/user-attachments/assets/4f12c9da-9fb4-4bda-b4da-d4d7bd45f6e4">
+<img width="750" alt="Screenshot 2024-03-04 at 3 39 14 PM" src="https://github.com/user-attachments/assets/08c59751-6c21-439a-96c6-398d8203e213">
+
+
 
 
 ##### This is a CRUD (Create Read Update Delete) Application implemented with MongoDB. So students can `create` data. Recruiters can `read` data by searching via different fields. Both recruiters and candidates can `update` their data, and only recruiters can `delete` candidates. 
