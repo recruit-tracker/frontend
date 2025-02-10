@@ -55,5 +55,10 @@ Recruiters can either add feedback manually with the `+` button, they can also u
 ### Authentication
 ![Authentication-copy](https://github.com/ua-innovate-cgi/frontend/assets/107063397/de726ee3-5104-4370-8e3d-b24e1004743c)
 
+#### **Quick Overview of Authentication**
+Authentication is handled using **JWT (JSON Web Tokens)**, where users (students or HR) log in with their email and password. When a user submits their credentials via `/api/login`, the system verifies them against MongoDB. If authentication is successful, a JWT is generated, containing user details like their **role (student/hr)**, and is then sent back to the client. The client stores this token in `localStorage` for subsequent requests.
 
+For protected routes, **role-based access control (RBAC)** is enforced using the `ProtectedRoute` component in the frontend. This component checks `localStorage.role` and ensures users can only access authorized pages (`/student` for students, `/hr` for HR). Unauthorized users are **redirected away** to prevent access to restricted areas.
+
+On the backend, the JWT token is verified before granting access to protected endpoints. When a user requests a resource, their token is decoded, and their role is checked. If authentication or authorization fails, the system responds with a `401 Unauthorized` error, ensuring that only authorized users can modify or retrieve data.
 
